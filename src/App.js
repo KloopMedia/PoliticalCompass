@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import "./App.css"
 
 import TextInput from "./Components/form/textInput";
-import AxisProp from "./Components/axis/axis";
+import AxisProp from "./Components/Charts/axis";
 import SelectBox from "./Components/form/selectBox";
+import Charts from "./Components/Charts/Charts";
 import RadioButton from "./Components/form/radiobutton";
 import TimePickers from "./Components/form/timePickers";
 import RadioHorizontal from "./Components/form/radioHorizontal";
@@ -110,7 +111,8 @@ class App extends Component {
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				{questionList}
-				<AxisProp axis={JSON.stringify(this.state.axises)}/>
+				<AxisProp axis={this.state.axises}/>
+				<Charts axis={this.state.axises}/>
 			</div>
 		);
 	}
