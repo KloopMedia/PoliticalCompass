@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./App.css"
 
 import TextInput from "./Components/form/textInput";
+import AxisProp from "./Components/axis/axis";
 import SelectBox from "./Components/form/selectBox";
 import RadioButton from "./Components/form/radiobutton";
 import TimePickers from "./Components/form/timePickers";
@@ -16,7 +17,7 @@ class App extends Component {
 		main_title: '',
 		gateway: '',
 		answers: {},
-		axises: {},
+		axises: [],
 		showAnswers: false
 	}
 
@@ -77,52 +78,30 @@ class App extends Component {
 	getAxis = (state) => {
 		let state_answers = Object.entries(state.answers);
 		let answer, index_question, question, answer_index, axis;
-		let total_axis = {
-			a: 0,
-			b: 0,
-		}
-		state_answers.forEach((item, index, array) => {
+		let total_axis = this.state.axises
+		state_answers.forEach((item) => {
 			answer = item[1]
 			index_question = item[0]
 			question = state.questions[index_question].title
 			answer_index = state.questions[index_question].answer.indexOf(answer)
 			axis = state.questions[index_question].axis[answer_index]
 
-			total_axis.a += axis.a
-			total_axis.b += axis.b
+			total_axis = axis
 			this.setState({axises: total_axis})
 
 		})
-
-		console.log(state)
 
 	};
 
 
 	render() {
 		let questionList = this.state.questions.map((el, i) => {
-			// if (el.type === 'input') {
-			//   return <TextInput key={i} index={i} title={el.title} returnAnswer={this.returnAnswer} />
-			// }
-			// else if (el.type === 'select') {
 			if (el.type === 'select') {
 				return <SelectBox key={i} index={i} title={el.title} answers={el.answer} returnAnswer={this.returnAnswer}/>
 			}
-			// else if (el.type === 'radio') {
-			//   return <RadioButton key={i} index={i} title={el.title} answers={el.answer} returnAnswer={this.returnAnswer} axises={el.axis} returnAxis={this.returnAxis}/>
-			// }
-			// e
-			// lse if (el.type === 'time') {
-			//   return <TimePickers key={i} index={i} title={el.title} returnAnswer={this.returnAnswer} />
-			// }
-			// else if (el.type === 'multiradio') {
-			//   return <RadioHorizontal key={i} index={i} title={el.title} subquestion={el.subquestion} answers={el.answer} returnAnswer={this.returnAnswer}
-			//   axises={el.axis} returnAxis={this.returnAxis}/>
-			// }
-			// else {
-			//   return null
-			// }
 		})
+
+
 
 		return (
 			<div className="App">
@@ -131,6 +110,7 @@ class App extends Component {
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				{questionList}
+				<AxisProp axis={JSON.stringify(this.state.axises)}/>
 			</div>
 		);
 	}
