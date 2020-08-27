@@ -74,10 +74,30 @@ class App extends Component {
 		this.setState({answers: answers})
 	}
 
-	getAxies = (state) => {
-		state.answers.map(x => console.log(x))
+	getAxis = (state) => {
+		let state_answers = Object.entries(state.answers);
+		let answer, index_question, question, answer_index, axis;
+		let total_axis = {
+			a: 0,
+			b: 0,
+		}
+		state_answers.forEach((item, index, array) => {
+			answer = item[1]
+			index_question = item[0]
+			question = state.questions[index_question].title
+			answer_index = state.questions[index_question].answer.indexOf(answer)
+			axis = state.questions[index_question].axis[answer_index]
+
+			total_axis.a += axis.a
+			total_axis.b += axis.b
+			this.setState({axises: total_axis})
+
+		})
+
+		console.log(state)
 
 	};
+
 
 	render() {
 		let questionList = this.state.questions.map((el, i) => {
@@ -109,7 +129,7 @@ class App extends Component {
 				<h1 className="text-align-center">{this.state.main_title}</h1>
 				{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
-				<button onClick={() => this.getAxies(this.state)}>Show state</button>
+				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				{questionList}
 			</div>
 		);

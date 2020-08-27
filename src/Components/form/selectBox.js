@@ -15,7 +15,6 @@ export default function SelectBox(props) {
 
 	const classes = useStyles();
 	const [value, setValue] = React.useState('');
-	const [axis, setAxis] = React.useState('');
 
 	const index = props.index
 	const [open, setOpen] = React.useState(false);
@@ -47,7 +46,6 @@ export default function SelectBox(props) {
 					onOpen={handleOpen}
 					value={value}
 					onChange={handleChange}>
-
 					<MenuItem value={""}><em>None</em></MenuItem>
 					{props.answers.map((el, i) => <MenuItem key={i} value={el}>{el}</MenuItem>)}
 				</Select>
