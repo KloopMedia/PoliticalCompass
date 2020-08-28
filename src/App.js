@@ -8,6 +8,8 @@ import Charts from "./Components/Charts/Charts";
 import RadioButton from "./Components/form/radiobutton";
 import TimePickers from "./Components/form/timePickers";
 import RadioHorizontal from "./Components/form/radioHorizontal";
+import Scatter3d from "./Components/Charts/Scatter3d";
+
 
 const queryString = require('query-string');
 
@@ -16,9 +18,10 @@ class App extends Component {
 	state = {
 		questions: [],
 		main_title: '',
+		axis_template: {},
 		gateway: '',
 		answers: {},
-		axises: [],
+		axises: {},
 		showAnswers: false
 	}
 
@@ -41,6 +44,7 @@ class App extends Component {
 					console.log("DATA", data);
 					this.setState({
 						questions: data.questions,
+						axis_template: data.axis_template,
 						main_title: data.main_title,
 						gateway: data.gateway
 					})
@@ -76,22 +80,31 @@ class App extends Component {
 		this.setState({answers: answers})
 	}
 
+	returnAxis = (axis, index) => {
+		console.log(index)
+		console.log(axis)
+		console.log()
+		let axises = {...this.state.axises}
+		axises[index] = axis
+		this.setState({axises: axises})
+	}
+
 	getAxis = (state) => {
 		let state_answers = Object.entries(state.answers);
 		let answer, index_question, question, answer_index, axis;
-		let total_axis = this.state.axises
-		state_answers.forEach((item) => {
+		state_answers.forEach((item, index, array) => {
+
 			answer = item[1]
 			index_question = item[0]
 			question = state.questions[index_question].title
 			answer_index = state.questions[index_question].answer.indexOf(answer)
 			axis = state.questions[index_question].axis[answer_index]
 
-			total_axis = axis
-			this.setState({axises: total_axis})
 
+
+			this.returnAxis(axis, index)
 		})
-
+		console.log(this.state.axises)
 	};
 
 
@@ -102,7 +115,12 @@ class App extends Component {
 			}
 		})
 
+		let chart = () => {
+			if (this.state.axises != {}) {
+				return <Scatter3d data={this.state.axises}/>
 
+			}
+		}
 
 		return (
 			<div className="App">
@@ -112,7 +130,8 @@ class App extends Component {
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				{questionList}
 				<AxisProp axis={this.state.axises}/>
-				<Charts axis={this.state.axises}/>
+
+				{chart()}
 			</div>
 		);
 	}

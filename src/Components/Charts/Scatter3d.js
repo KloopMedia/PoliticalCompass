@@ -15,28 +15,21 @@ export default function Scatter3d(props) {
 
 	const getOption = () => ({
 		grid3D: {},
-		xAxis3D: {
-			data: [1, 423, 4, 5]
-		},
-		yAxis3D: {
-			data: [6, 3, 6, 33]
-		},
-		zAxis3D: {
-			data: [6, 3, 6, 33]
-		},
+		xAxis3D: {},
+		yAxis3D: {},
+		zAxis3D: {},
 		series: [{
 			type: 'scatter3D',
 			symbolSize: 15,
-			data: [1, 2, 3, 5],
+			data: props.data,
 			itemStyle: {
-				opacity: 1
+				opacity: 4
 			}
 		}]
 	});
 
 	return (
 		<div className={classes.formControl}>
-			<label>{props.status}</label>
 			<ReactEcharts option={getOption()}/>
 		</div>
 	);
