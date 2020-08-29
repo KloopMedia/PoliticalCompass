@@ -22,6 +22,8 @@ class App extends Component {
 		gateway: '',
 		answers: {},
 		axises: {},
+		total_axis: [],
+		compass_compare: {},
 		showAnswers: false
 	}
 
@@ -46,7 +48,8 @@ class App extends Component {
 						questions: data.questions,
 						axis_template: data.axis_template,
 						main_title: data.main_title,
-						gateway: data.gateway
+						gateway: data.gateway,
+						compass_compare: data.compass_compare
 					})
 				});
 		} else {
@@ -80,19 +83,18 @@ class App extends Component {
 		this.setState({answers: answers})
 	}
 
-	returnAxis = (axis, index) => {
-		console.log(index)
-		console.log(axis)
-		console.log()
+	returnAxis = (axis) => {
 		let axises = {...this.state.axises}
-		axises[index] = axis
+		axises = axis
 		this.setState({axises: axises})
 	}
 
+
 	getAxis = (state) => {
 		let state_answers = Object.entries(state.answers);
+
 		let answer, index_question, question, answer_index, axis;
-		state_answers.forEach((item, index, array) => {
+		let axs = state_answers.map((item, index, array) => {
 
 			answer = item[1]
 			index_question = item[0]
@@ -100,12 +102,24 @@ class App extends Component {
 			answer_index = state.questions[index_question].answer.indexOf(answer)
 			axis = state.questions[index_question].axis[answer_index]
 
-
-
-			this.returnAxis(axis, index)
+			return axis
 		})
-		console.log(this.state.axises)
+		this.returnAxis(axs)
+		this.getAxisSum(axs)
 	};
+
+	getAxisSum = (axs) => {
+		let arr = [];
+		const sum = this.state.axis_template
+		// let sum = {a: 0, b: 0}
+		Object.values(axs).forEach(el => {
+			Object.keys(el).forEach(key => {
+				sum[key] += el[key]
+			})
+		})
+		this.setState({total_axis: sum})
+
+	}
 
 
 	render() {
@@ -117,21 +131,21 @@ class App extends Component {
 
 		let chart = () => {
 			if (this.state.axises != {}) {
-				return <Scatter3d data={this.state.axises}/>
+				return <Scatter3d data={this.state.total_axis} position={this.state.compass_compare.position} axises={this.state.compass_compare.axises}/>
 
 			}
 		}
 
 		return (
 			<div className="App">
-				<h1 className="text-align-center">{this.state.main_title}</h1>
+				<h1 className="text-align-center">{JSON.stringify(this.state.axis_template)}</h1>
 				{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				{questionList}
 				<AxisProp axis={this.state.axises}/>
-
 				{chart()}
+				{console.log(this.state.compass_compare[0])}
 			</div>
 		);
 	}
