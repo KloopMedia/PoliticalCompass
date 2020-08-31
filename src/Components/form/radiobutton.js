@@ -11,7 +11,6 @@ export default function RadioButton(props) {
 	const handleChange = (event) => {
 		setValue(event.target.value)
 		props.returnAnswer(event.target.value, index)
-		props.returnAxis(event.target.value, index)
 	};
 
 	return (
@@ -20,7 +19,6 @@ export default function RadioButton(props) {
 			<FormControl const='fieldset'>
 				<RadioGroup aria-label={props.title} name={props.title} value={value} onChange={handleChange}>
 					{props.answers.map((el, i) => <FormControlLabel key={i} value={el} control={<Radio/>} label={el}/>)}
-					{props.axises.map}
 				</RadioGroup>
 			</FormControl>
 		</div>
