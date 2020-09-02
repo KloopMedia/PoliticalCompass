@@ -27,7 +27,8 @@ class App extends Component {
 		total_axis: [],
 		position: {},
 		axis: [],
-		axis_names: [],
+		axises_object: [],
+		axis_names: {},
 		compass_compare: {},
 		showAnswers: false
 	}
@@ -56,7 +57,7 @@ class App extends Component {
 						gateway: data.gateway,
 						compass_compare: data.compass_compare,
 						axis: data.axises,
-						axis_: data.axises_
+						axises_object: data.axises_object
 					})
 				});
 		} else {
@@ -90,15 +91,44 @@ class App extends Component {
 		this.setState({answers: answers})
 	}
 
+	returnAxisName = (axis_name, index) => {
+		let axises = {...this.state.axis_names}
+		axises[index] = axis_name
+		this.setState({axis_names: axises})
+	}
+
+	getAxisTemplate = (state) => {
+
+		let axis_names = [];
+		let axis, axis_index, axis_object;
+		let bbb;
+		let template = Object.entries(state.axis_names).map((item, index, array) => {
+			axis = item[1]
+			axis_index = item[0]
+			axis_object = state.axises_object[axis_index]
+			if (axis) {
+				// axis_names.push(axis_object)
+				return axis_object
+			}
+		})
+
+		template = template.filter(item => item !== undefined)
+		console.log('template.',template)
+		// console.log('axis_names.',axis_names)
+		for (let i = 0; i < template.length + 1; i++) {
+			if (i != template.length) {
+				console.log(template[i], template[i + 1])
+				bbb = Object.assign(template[i], template[i + 1], bbb )
+			}
+		}
+
+		console.log('bbb',bbb)
+	}
+
 	returnAxis = (axis) => {
 		let axises = {...this.state.axises}
 		axises = axis
 		this.setState({axises: axises})
-	}
-	returnAxisName = (axis_name, index) => {
-		let axises = {...this.state.axises}
-		axises[index] = axis_name
-		this.setState({axis_names: axises})
 	}
 
 	getAxis = (state) => {
@@ -189,9 +219,10 @@ class App extends Component {
 				{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
+				<button onClick={() => this.getAxisTemplate(this.state)}>axis_names</button>
 				{questionList}
 				{checkbox}
-				{console.log(this.state.axis_names)}
+				{/*{this.state.axis_names}*/}
 				<AxisProp axis={this.state.axises}/>
 				{chart()}
 				<h4>{JSON.stringify(this.state.position)}</h4>
