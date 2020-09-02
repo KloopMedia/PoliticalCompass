@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
 import "./App.css"
-
-import TextInput from "./Components/form/textInput";
 import AxisProp from "./Components/Charts/axis";
 import SelectBox from "./Components/form/selectBox";
-import Charts from "./Components/Charts/Charts";
-import RadioButton from "./Components/form/radiobutton";
-import TimePickers from "./Components/form/timePickers";
-import RadioHorizontal from "./Components/form/radioHorizontal";
 import Scatter3d from "./Components/Charts/Scatter3d";
-import axis from "./Components/Charts/axis";
 import CheckBox from "./Components/form/checkBox";
 
 
@@ -29,6 +22,7 @@ class App extends Component {
 		axis: [],
 		axises_object: [],
 		axis_names: {},
+		all_axis: {},
 		compass_compare: {},
 		showAnswers: false
 	}
@@ -101,28 +95,25 @@ class App extends Component {
 
 		let axis_names = [];
 		let axis, axis_index, axis_object;
-		let bbb;
+		let all_axis;
 		let template = Object.entries(state.axis_names).map((item, index, array) => {
 			axis = item[1]
 			axis_index = item[0]
 			axis_object = state.axises_object[axis_index]
 			if (axis) {
-				// axis_names.push(axis_object)
+				axis_names.push(axis_object)
 				return axis_object
 			}
 		})
 
 		template = template.filter(item => item !== undefined)
-		console.log('template.',template)
-		// console.log('axis_names.',axis_names)
+		template = template.reverse()
 		for (let i = 0; i < template.length + 1; i++) {
 			if (i != template.length) {
-				console.log(template[i], template[i + 1])
-				bbb = Object.assign(template[i], template[i + 1], bbb )
+				all_axis = Object.assign({}, template[i], template[i + 1], all_axis)
 			}
 		}
-
-		console.log('bbb',bbb)
+		this.setState({all_axis: all_axis})
 	}
 
 	returnAxis = (axis) => {
