@@ -23,6 +23,7 @@ class App extends Component {
 		axises_object: [],
 		axis_names: {},
 		all_axis: {},
+		count_axises: [],
 		compass_compare: {},
 		showAnswers: false
 	}
@@ -37,7 +38,8 @@ class App extends Component {
 		if (true) {
 			// if (urlString.url) {
 			// 	fetch(urlString.url)
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_A.json')
 				.then((response) => {
 					console.log("RESPONSE", response)
 					return response.json();
@@ -124,7 +126,8 @@ class App extends Component {
 
 	getAxis = (state) => {
 		let state_answers = Object.entries(state.answers);
-
+		let axises_names = [];
+		let axis_count = []
 		let answer, index_question, question, answer_index, axis;
 		let axs = state_answers.map((item, index, array) => {
 
@@ -134,24 +137,38 @@ class App extends Component {
 			answer_index = state.questions[index_question].answer.indexOf(answer)
 			axis = state.questions[index_question].axis[answer_index]
 
-			return axis
+			axises_names.push(Object.keys(axis)[0])
+			return axis;
 		})
-		this.returnAxis(axs)
-		this.getAxisSum(axs)
+		let unique_axis = [...new Set(axises_names)];
+		unique_axis.forEach((item, index) => {
+			let difference = axises_names.lastIndexOf(item) - axises_names.indexOf(item)
+			axis_count.push(difference)
+		})
+		this.returnAxis(axs);
+		this.getAxisSum(axs, axis_count);
 	};
 
-	getAxisSum = (axs) => {
+	getAxisSum = (axs, axis_count) => {
 		const sum = this.state.axis_template
+		let sum_array;
 		Object.values(axs).forEach(el => {
+			// console.log(Object.keys(el))
 			Object.keys(el).forEach(key => {
 				sum[key] += el[key]
 			})
 		})
-		this.distanceEuclid(sum)
+		sum_array = Object.values(sum)
+		console.log(sum_array)
+		for (let i = 0; i < sum_array.length; i++) {
+			sum_array[i] = sum_array[i] / axis_count[i]
+		}
+		console.log(sum_array)
+
+		this.distanceEuclid(sum_array)
 	}
 
 	distanceEuclid = (axises) => {
-		axises = Object.values(axises)
 		let distanceIs;
 		let minDistance = Infinity;
 		let distance = require('euclidean-distance')
@@ -212,9 +229,8 @@ class App extends Component {
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 				<button onClick={() => this.getAxisTemplate(this.state)}>axis_names</button>
 				{questionList}
-				{checkbox}
-				{/*{this.state.axis_names}*/}
 				<AxisProp axis={this.state.axises}/>
+				{checkbox}
 				{chart()}
 				<h4>{JSON.stringify(this.state.position)}</h4>
 			</div>
