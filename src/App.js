@@ -146,10 +146,10 @@ class App extends Component {
 			axis_count.push(difference)
 		})
 		this.returnAxis(axs);
-		this.getAxisSum(axs, axis_count);
+		this.getAxisAverage(axs, axis_count);
 	};
 
-	getAxisSum = (axs, axis_count) => {
+	getAxisAverage = (axs, axis_count) => {
 		const sum = this.state.axis_template
 		let sum_array;
 		Object.values(axs).forEach(el => {
@@ -159,9 +159,11 @@ class App extends Component {
 			})
 		})
 		sum_array = Object.values(sum)
-		console.log(sum_array)
 		for (let i = 0; i < sum_array.length; i++) {
-			sum_array[i] = sum_array[i] / axis_count[i]
+			if (axis_count[i] !== undefined){
+				sum_array[i] = sum_array[i] / axis_count[i]
+			}
+
 		}
 		console.log(sum_array)
 
@@ -227,12 +229,10 @@ class App extends Component {
 				{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
-				<button onClick={() => this.getAxisTemplate(this.state)}>axis_names</button>
 				{questionList}
 				<AxisProp axis={this.state.axises}/>
 				{checkbox}
 				{chart()}
-				<h4>{JSON.stringify(this.state.position)}</h4>
 			</div>
 		);
 	}
