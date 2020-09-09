@@ -3,7 +3,9 @@ import "./App.css"
 import AxisProp from "./Components/Charts/axis";
 import SelectBox from "./Components/form/selectBox";
 import Scatter3d from "./Components/Charts/Scatter3d";
+import RadioButton from "./Components/form/radiobutton";
 import CheckBox from "./Components/form/checkBox";
+import {push} from "echarts/src/component/dataZoom/history";
 
 
 const queryString = require('query-string');
@@ -13,18 +15,23 @@ class App extends Component {
 	state = {
 		questions: [],
 		main_title: '',
-		axis_template: {},
 		gateway: '',
 		answers: {},
 		axises: {},
 		total_axis: [],
+		axis_title_values: [],
+		axis_values: [],
 		position: {},
 		axis: [],
+		axis_title: [],
 		axises_object: [],
 		axis_names: {},
 		all_axis: {},
+		answer_title_values: [],
+		answer_values: [],
 		count_axises: [],
 		compass_compare: {},
+		default_axises: [],
 		showAnswers: false
 	}
 
@@ -36,10 +43,9 @@ class App extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			// if (urlString.url) {
-			// 	fetch(urlString.url)
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_A.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
+				// if (urlString.url) {
+				// 	fetch(urlString.url)
 				.then((response) => {
 					console.log("RESPONSE", response)
 					return response.json();
@@ -48,12 +54,16 @@ class App extends Component {
 					console.log("DATA", data);
 					this.setState({
 						questions: data.questions,
-						axis_template: data.axis_template,
 						main_title: data.main_title,
 						gateway: data.gateway,
 						compass_compare: data.compass_compare,
 						axis: data.axises,
-						axises_object: data.axises_object
+						axis_title: data.axis_title,
+						axis_title_values: data.axis_title_values,
+						axis_values: data.axis_values,
+						answer_title_values: data.answer_title_values,
+						answer_values: data.answer_values,
+						axises_object: data.axises_object,
 					})
 				});
 		} else {
@@ -94,7 +104,6 @@ class App extends Component {
 	}
 
 	getAxisTemplate = (state) => {
-
 		let axis_names = [];
 		let axis, axis_index, axis_object;
 		let all_axis;
@@ -115,6 +124,7 @@ class App extends Component {
 				all_axis = Object.assign({}, template[i], template[i + 1], all_axis)
 			}
 		}
+		return all_axis
 		this.setState({all_axis: all_axis})
 	}
 
@@ -126,53 +136,66 @@ class App extends Component {
 
 	getAxis = (state) => {
 		let state_answers = Object.entries(state.answers);
+
 		let axises_names = [];
-		let axis_count = []
-		let answer, index_question, question, answer_index, axis;
+		let axis_count = {};
+		let answer, index_question;
 		let axs = state_answers.map((item, index, array) => {
 
 			answer = item[1]
 			index_question = item[0]
-			question = state.questions[index_question].title
-			answer_index = state.questions[index_question].answer.indexOf(answer)
-			axis = state.questions[index_question].axis[answer_index]
+			let answer_type = state.questions[index_question].answer;
+			let answer_type_index = state.answer_title_values.indexOf(answer_type)
+			let answers_item = state.answer_values[answer_type_index]
+			let answer_index = answers_item.indexOf(answer)
 
-			axises_names.push(Object.keys(axis)[0])
-			return axis;
+			let axis_type = state.questions[index_question].axis;
+			let axis_type_index = state.axis_title_values.indexOf(axis_type)
+			let axis_array = state.axis_values[axis_type_index]
+			let axis_is = axis_array[answer_index]
+
+			axises_names.push(Object.keys(axis_is)[0])
+
+			return axis_is;
 		})
+		axises_names = axises_names.sort()
+
 		let unique_axis = [...new Set(axises_names)];
 		unique_axis.forEach((item, index) => {
-			let difference = axises_names.lastIndexOf(item) - axises_names.indexOf(item)
-			axis_count.push(difference)
+			let difference = (axises_names.lastIndexOf(item) + 1) - axises_names.indexOf(item)
+
+			axis_count[item] = difference
 		})
 		this.returnAxis(axs);
 		this.getAxisAverage(axs, axis_count);
 	};
 
 	getAxisAverage = (axs, axis_count) => {
-		const sum = this.state.axis_template
+		const sum = this.getAxisTemplate(this.state)
 		let sum_array;
+
 		Object.values(axs).forEach(el => {
-			// console.log(Object.keys(el))
 			Object.keys(el).forEach(key => {
-				sum[key] += el[key]
+				if (sum[key] !== undefined) {
+					sum[key] += el[key]
+				}
 			})
 		})
-		sum_array = Object.values(sum)
-		for (let i = 0; i < sum_array.length; i++) {
-			if (axis_count[i] !== undefined){
-				sum_array[i] = sum_array[i] / axis_count[i]
+
+		Object.keys(sum).forEach(key => {
+			if (axis_count[key] !== undefined) {
+				sum[key] = sum[key] / axis_count[key]
 			}
+		})
 
-		}
-		console.log(sum_array)
-
-		this.distanceEuclid(sum_array)
+		sum_array = Object.values(sum)
+		this.distanceEuclid(sum)
 	}
 
-	distanceEuclid = (axises) => {
+	distanceEuclid = (axises_object) => {
 		let distanceIs;
 		let minDistance = Infinity;
+		let axises = [];
 		let distance = require('euclidean-distance')
 
 		let positionInfo = {
@@ -180,15 +203,38 @@ class App extends Component {
 			title: Infinity,
 		}
 
-		while (axises.length < 3) {
-			axises.push(0)
+		let axises_object_keys = Object.keys(axises_object);//keys of choosen axises
+		let axises_object_values = Object.values(axises_object);// values of choosen axises
+		const axises_idx = [];
+		;
+
+		let default_axises = [];
+		while (default_axises.length < this.state.compass_compare.axises.length) {
+			default_axises.push([])
 		}
+
+		axises_object_keys.forEach((el, i) => {
+			axises[i] = axises_object_values[i]
+			axises_idx[i] = this.state.axis.indexOf(el)
+		})
+
+		this.state.compass_compare.axises.map((item, item_index) => {
+			let default_axis = []
+			while (default_axis.length < axises_idx.length) {
+				default_axis.push(0)
+			}
+			axises_idx.forEach((axis_idx, idx) => {
+				default_axis[idx] = item[axis_idx]
+			})
+
+			default_axises[item_index] = default_axis
+		})
 
 		this.setState({total_axis: axises})
 
 
 		if (axises.length != [0].length) {
-			this.state.compass_compare.axises.forEach((item, index, array) => {
+			default_axises.forEach((item, index, array) => {
 				distanceIs = distance(axises, item);
 
 				if (distanceIs < minDistance) {
@@ -208,13 +254,27 @@ class App extends Component {
 
 	render() {
 		let questionList = this.state.questions.map((el, i) => {
-			if (el.type === 'select') {
-				return <SelectBox key={i} index={i} title={el.title} answers={el.answer} returnAnswer={this.returnAnswer}/>
+			if (el.type === 'selecadt') {
+				let type_answers = el.answer;
+				let title_values = this.state.answer_title_values;
+				let index_type = title_values.indexOf(type_answers);
+				let answer = this.state.answer_values[index_type]
+
+				return <SelectBox key={i} index={i} title={el.title} answers={answer} returnAnswer={this.returnAnswer}/>
+
+			} else if (el.type === 'select') {
+				let type_answers = el.answer;
+				let title_values = this.state.answer_title_values;
+				let index_type = title_values.indexOf(type_answers);
+				let answer = this.state.answer_values[index_type]
+
+				return <RadioButton key={i} index={i} title={el.title} answers={answer} returnAnswer={this.returnAnswer}/>
 			}
 		})
 
 		let checkbox = this.state.axis.map((el, i) => {
-			return <CheckBox key={i} index={i} title={el} returnAxisName={this.returnAxisName}/>
+			return <CheckBox key={i} index={i} name={el} title={this.state.axis_title[i]}
+			                 returnAxisName={this.returnAxisName}/>
 		})
 
 		let chart = () => {
@@ -225,14 +285,16 @@ class App extends Component {
 
 		return (
 			<div className="App">
-				<h1 className="text-align-center">{JSON.stringify(this.state.axis_template)}</h1>
+				<h1 className="text-align-center">{JSON.stringify(this.state.total_axis)}</h1>
 				{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
+				{checkbox}
 				{questionList}
 				<AxisProp axis={this.state.axises}/>
-				{checkbox}
 				{chart()}
+				<button onClick={() => this.getAxis(this.state)}>Show state</button>
+
 			</div>
 		);
 	}

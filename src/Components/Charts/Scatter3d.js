@@ -18,12 +18,12 @@ export default function Scatter3d(props) {
 			yAxis3D: {},
 			zAxis3D: {},
 			series: [
-			// 	{
-			// 	type: 'scatter3D',
-			// 	symbolSize: 15,
-			// 	data: props.axises.axises,
-			// 	color: 'black'
-			// },
+				{
+				type: 'scatter3D',
+				symbolSize: 15,
+				data: props.axises.axises,
+				color: 'black'
+			},
 			{
 				type: 'scatter3D',
 				symbolSize: 15,

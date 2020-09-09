@@ -15,7 +15,7 @@ export default function CheckBox(props) {
 	return (
 		<FormGroup>
 		<FormControlLabel
-        control={<Checkbox checked={value} onChange={handleChange} key={props.key} value={props.title}/>}
+        control={<Checkbox checked={value} onChange={handleChange} key={props.key} value={props.name}/>}
         label={props.title}
       />
 		</FormGroup>
