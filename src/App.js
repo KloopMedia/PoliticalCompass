@@ -32,7 +32,9 @@ class App extends Component {
 		count_axises: [],
 		compass_compare: {},
 		default_axises: [],
-		showAnswers: false
+		showAnswers: false,
+		size: 0,
+		page: 0
 	}
 
 	componentDidMount() {
@@ -64,6 +66,7 @@ class App extends Component {
 						answer_title_values: data.answer_title_values,
 						answer_values: data.answer_values,
 						axises_object: data.axises_object,
+						size: data.questions.length
 					})
 				});
 		} else {
@@ -253,7 +256,18 @@ class App extends Component {
 	}
 
 	render() {
-		let questionList = this.state.questions.map((el, i) => {
+		let qSet = null
+		if (this.state.page === 0) {
+			qSet = this.state.questions.slice(0, 30)
+		}
+		else if (this.state.page === 1) {
+			qSet = this.state.questions.slice(30, 60)
+		}
+		else if (this.state.page === 2) {
+			qSet = this.state.questions.slice(60, 90)
+		}
+		
+		let questionList = qSet.map((el, i) => {
 			if (el.type === 'selecadt') {
 				let type_answers = el.answer;
 				let title_values = this.state.answer_title_values;
@@ -293,6 +307,7 @@ class App extends Component {
 				{questionList}
 				<AxisProp axis={this.state.axises}/>
 				{chart()}
+				<button onClick={() => this.setState({page: this.state.page + 1})}>Next page</button>
 				<button onClick={() => this.getAxis(this.state)}>Show state</button>
 
 			</div>
