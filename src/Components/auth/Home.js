@@ -1,16 +1,21 @@
-import React, {Component} from 'react';
-import "./App.css"
-import Scatter3d from "./Components/Charts/Scatter3d";
-import AllAxisAverrage from "./Components/axisAverrage/axisAverrage";
-import RadioButton from "./Components/form/radiobutton";
-import CheckBox from "./Components/form/checkBox";
-import Scatter from "./Components/Charts/Scatter";
-import firebase from './util/firebase'
+import React, {Component, useEffect, useState} from "react";
+import '../../App.css'
+// import AllAxisAverrage from "../../ Components/axisAverrage/axisAverrage";
+// import RadioButton from "./Components/form/radiobutton";
+// import CheckBox from "./Components/form/checkBox";
+// import Scatter from "./Components/Charts/Scatter";
+// import firebase from './util/firebase'
+// import app from '../../util/firebase'
 
-const queryString = require('query-string');
+import AllAxisAverrage from "../axisAverrage/axisAverrage";
+import RadioButton from "../form/radiobutton";
+import CheckBox from "../form/checkBox";
+import Scatter from "../Charts/Scatter";
+import firebase from "../../util/firebase";
 
+const queryString = require('query-string')
 
-class App extends Component {
+class Home extends Component {
 	state = {
 		questions: [],
 		main_title: '',
@@ -434,4 +439,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default Home;

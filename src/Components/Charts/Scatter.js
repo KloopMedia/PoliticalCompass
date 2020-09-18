@@ -9,27 +9,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Scatter3d(props) {
+export default function Scatter(props) {
 	const classes = useStyles();
 
 	const getOption = () => ({
-			grid3D: {},
-			xAxis3D: {},
-			yAxis3D: {},
-			zAxis3D: {},
-			series: [
-				{
-				type: 'scatter3D',
+			xAxis: {},
+			yAxis: {},
+			series: [{
 				symbolSize: 15,
-				data: props.axises.axises,
+				data: props.axises,
+				type: 'scatter',
 				color: 'black'
 			},
-			{
-				type: 'scatter3D',
-				symbolSize: 10,
-				data: [props.myAxis],
-				color: 'red'
-			}],
+				{
+					symbolSize: 10,
+					data: [props.myAxis],
+					type: 'scatter',
+					color: 'red'
+				}
+			]
 		})
 	;
 
@@ -39,5 +37,3 @@ export default function Scatter3d(props) {
 		</div>
 	);
 }
-
-//<Scatter3d myAxis={this.state.total_axis} axises={this.state.compass_compare}/>
