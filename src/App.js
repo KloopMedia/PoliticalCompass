@@ -6,6 +6,7 @@ import RadioButton from "./Components/form/radiobutton";
 import CheckBox from "./Components/form/checkBox";
 import Scatter from "./Components/Charts/Scatter";
 import firebase from './util/firebase'
+import AxisProp from "./Components/Charts/axis";
 
 const queryString = require('query-string');
 
@@ -38,6 +39,8 @@ class App extends Component {
 		questions_on_page: 0,
 		first_questions: 0,
 
+		size: 0,
+		page: 0
 	}
 
 
@@ -73,6 +76,7 @@ class App extends Component {
 						answer_values: data.answer_values,
 						axises_object: data.axises_object,
 						questions_on_page: data.questions_on_page,
+						size: data.questions.length
 					})
 				});
 		} else {
@@ -432,6 +436,4 @@ class App extends Component {
 		);
 	}
 }
-
-
 export default App;
