@@ -1,17 +1,18 @@
 import React, {Component, useEffect, useState} from "react";
 import '../../App.css'
-// import AllAxisAverrage from "../../ Components/axisAverrage/axisAverrage";
-// import RadioButton from "./Components/form/radiobutton";
-// import CheckBox from "./Components/form/checkBox";
-// import Scatter from "./Components/Charts/Scatter";
-// import firebase from './util/firebase'
-// import app from '../../util/firebase'
-
 import AllAxisAverrage from "../axisAverrage/axisAverrage";
 import RadioButton from "../form/radiobutton";
 import CheckBox from "../form/checkBox";
 import Scatter from "../Charts/Scatter";
 import firebase from "../../util/firebase";
+import FacebookShareBtn from "../shareBtn/facebookShare";
+import app, {signInWithGoogle, signInAnonymously} from "../../util/firebase";
+import {
+	EmailShareButton,
+	FacebookShareButton,
+	FacebookShareCount
+} from "react-share";
+
 
 const queryString = require('query-string')
 
@@ -316,6 +317,7 @@ class Home extends Component {
 
 	saving_data = (state) => {
 		let part = {
+			// name: currentUser.email,
 			answers: state.answers,
 			axises_averrage: state.all_axis_averrage,
 			axises: state.axises,
@@ -402,34 +404,37 @@ class Home extends Component {
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
 				return (<div>
-								<h2 className="content-center">Выберите наиболее важные вещи для вас</h2>
-								<div className="choose_axises">
-									{checkbox}
-								</div>
-								{chart()}
-								<div className="allAxis">
-									{axisAverrage}
-								</div>
-								<button onClick={() => this.getAxis(this.state)}>Show state</button>
-								<br/>
-								<button onClick={previousAndScrollTop}>Previous page</button>
-								<button onClick={nextAndScrollTop}>Next page</button>
-								<br/>
-								<button onClick={() => this.saving_data(this.state)}>Save data</button>
-							</div>) //in if
+					<h2 className="content-center">Выберите наиболее важные вещи для вас</h2>
+					<div className="choose_axises">
+						{checkbox}
+					</div>
+					{chart()}
+					<div className="allAxis">
+						{axisAverrage}
+					</div>
+					<button onClick={() => this.getAxis(this.state)}>Show state</button>
+					<br/>
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+					<br/>
+					<button onClick={() => this.saving_data(this.state)}>Save data</button>
+				</div>) //in if
 
 			} else {
 				return (<div>
-									{questionList}
-									<button onClick={previousAndScrollTop}>Previous page</button>
-									<button onClick={nextAndScrollTop}>Next page</button>
-								</div>) // in else
+					{questionList}
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+				</div>) // in else
+
 			}
 		}
 
 		return (
 			<div className="App">
 				<button onClick={() => console.log(this.state)}>show state</button>
+				<button onClick={signInWithGoogle}>Sign in with google</button>
+				<FacebookShareBtn axises={this.state.all_axis_averrage} axises_title={this.state.axis_title}/>
 				{/*{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
 				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>*/}
 				{forms()}
