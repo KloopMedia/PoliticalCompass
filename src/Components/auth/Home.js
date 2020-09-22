@@ -55,7 +55,8 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
 				// if (urlString.url) {
