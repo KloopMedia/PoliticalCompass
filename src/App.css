@@ -126,7 +126,6 @@
 }
 
 
-
 .choose_axises > div > label > span:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -176,4 +175,19 @@
 
 .choose_axises > div{
     padding-bottom: 10px;
+}
+
+
+/*scatter-line*/
+.scatter-line {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+}
+
+
+/*result-position*/
+.result-position{
+    padding-bottom: 60px;
 }

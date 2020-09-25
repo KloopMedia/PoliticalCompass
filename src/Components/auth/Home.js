@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useState} from "react";
 import '../../App.css'
-import AllAxisAverrage from "../axisAverrage/axisAverrage";
 import RadioButton from "../form/radiobutton";
 import CheckBox from "../form/checkBox";
 import Scatter from "../Charts/Scatter";
@@ -12,6 +11,9 @@ import {
 	FacebookShareButton,
 	FacebookShareCount
 } from "react-share";
+import ScatterLine from "../axisAverrage/ScatterLineResult";
+
+let distance = require('euclidean-distance')
 
 
 const queryString = require('query-string')
@@ -24,6 +26,7 @@ class Home extends Component {
 		answers: {},
 		notAnswered: [],
 		axises: {},
+		axis_points: [],
 		total_axis: [],
 		axis_title_values: [],
 		axis_values: [],
@@ -40,6 +43,7 @@ class Home extends Component {
 		default_axises: [],
 		all_axis_averrage: [],
 		batch_axises: [],
+		onlyTwoCheckBox: true,
 		showAnswers: false,
 		questions_on_page: 0,
 		first_questions: 0,
@@ -56,9 +60,10 @@ class Home extends Component {
 		console.log(urlString)
 		if (true) {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -80,6 +85,7 @@ class Home extends Component {
 						answer_values: data.answer_values,
 						axises_object: data.axises_object,
 						questions_on_page: data.questions_on_page,
+						axis_points: data.axis_points,
 					})
 				});
 		} else {
@@ -259,7 +265,7 @@ class Home extends Component {
 		let distanceIs;
 		let minDistance = Infinity;
 		let axises = [];
-		let distance = require('euclidean-distance')
+		const minDistances = [];
 
 		let positionInfo = {
 			distance: Infinity,
@@ -296,11 +302,9 @@ class Home extends Component {
 
 		this.setState({batch_axises: default_axises})
 		this.setState({total_axis: axises})
-
 		if (axises.length != [0].length) {
 			default_axises.forEach((item, index, array) => {
 				distanceIs = distance(axises, item);
-
 				if (distanceIs < minDistance) {
 					minDistance = distanceIs;
 
@@ -353,8 +357,15 @@ class Home extends Component {
 		})
 
 		let axisAverrage = this.state.axis_title.map((el, i) => {
-			return (<AllAxisAverrage key={i} index={i} axisName={el} axisAverrage={this.state.all_axis_averrage[i]}/>
+			return (<ScatterLine index={i}
+			                     axisName={el}
+			                     names={this.state.compass_compare.position}
+			                     partyAxises={this.state.compass_compare.axises}
+			                     axisAverrage={this.state.all_axis_averrage[i]}
+			                     axisPoints={this.state.axis_points[i]}
+				/>
 			)
+
 
 		})
 
@@ -366,7 +377,13 @@ class Home extends Component {
 
 		let chart = () => {
 			if (this.state.axises != {}) {
-				return <Scatter myAxis={this.state.total_axis} axises={this.state.batch_axises}/>
+				return (
+					<div>
+						<Scatter myAxis={this.state.total_axis} names={this.state.compass_compare.position}
+						         axises={this.state.batch_axises}/>
+					</div>
+				)
+
 			}
 		}
 
@@ -402,18 +419,34 @@ class Home extends Component {
 			}
 		}
 
+		let onlyTwoCheckbox = () => {
+			let values = Object.values(this.state.axis_names)
+			const countTrue = values.filter(el => el == true)
+			if (countTrue.length < 3) {
+				this.setState({onlyTwoCheckBox: true})
+				this.getAxis(this.state)
+			} else {
+				this.setState({onlyTwoCheckBox: false})
+			}
+		}
+
+
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
+				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				return (<div>
 					<h2 className="content-center">Выберите наиболее важные вещи для вас</h2>
+					<p className="chooseAnswer padding_margin">{result}</p>
 					<div className="choose_axises">
 						{checkbox}
 					</div>
+					<button onClick={() => onlyTwoCheckbox()}>Показать результаты</button>
 					{chart()}
-					<div className="allAxis">
-						{axisAverrage}
+					<div className={'result-position'}>
+						<h3>Самая близкая для вас партия:</h3>
+						<h2>{this.state.position.title}</h2>
 					</div>
-					<button onClick={() => this.getAxis(this.state)}>Show state</button>
+					{axisAverrage}
 					<br/>
 					<button onClick={previousAndScrollTop}>Previous page</button>
 					<button onClick={nextAndScrollTop}>Next page</button>
@@ -428,6 +461,7 @@ class Home extends Component {
 					<button onClick={nextAndScrollTop}>Next page</button>
 				</div>) // in else
 
+
 			}
 		}
 
@@ -436,8 +470,6 @@ class Home extends Component {
 				<button onClick={() => console.log(this.state)}>show state</button>
 				<button onClick={signInWithGoogle}>Sign in with google</button>
 				<FacebookShareBtn axises={this.state.all_axis_averrage} axises_title={this.state.axis_title}/>
-				{/*{this.state.showAnswers ? <p>{JSON.stringify(this.state.answers)}</p> : null}
-				<button onClick={() => this.uploadData({"a": "HELLo"})}>Send data</button>*/}
 				{forms()}
 			</div>
 		);
