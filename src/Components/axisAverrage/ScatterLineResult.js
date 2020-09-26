@@ -6,7 +6,7 @@ import "../../App.css"
 
 const useStyles = makeStyles((theme) => ({
 	formControl: {
-		paddingBottom: 60,
+		height: 60,
 	},
 }));
 
@@ -16,13 +16,15 @@ export default function ScatterLine(props) {
 	let minDistance = Infinity
 	let position;
 	let distance = require('euclidean-distance')
+	const color = ["#3B93EA", "#F7C906","#00405E" , "#552E83", "#010667", "#009749"]
 
 	let axises = props.partyAxises.map((el, i) => {
 		let partyAxis = {
-			symbolSize: 17,
+			name: props.names[i],
+			symbolSize: 12,
 			data: [[el[props.index], 0]],
 			type: 'scatter',
-			color: 'black',
+			color: color[i],
 			emphasis: {
 				label: {
 					show: true,
@@ -45,17 +47,29 @@ export default function ScatterLine(props) {
 
 		return partyAxis
 	})
+
 	axises.push({
-		symbolSize: 13,
+		symbolSize: 7,
 		data: [[props.axisAverrage, 0]],
 		type: 'scatter',
-		color: 'red'
+		color: 'black',
+		emphasis: {
+				label: {
+					show: true,
+					formatter: "Я",
+					position: 'top'
+				}
+			}
 	})
 
+
 	const getOption = () => ({
-		tooltip: {
-			trigger: "axis",
-			axisPointer: {}
+		color: color,
+		legend:{
+			data: props.names,
+			orient: "horizontal",
+			bottom: "0%",
+			width: "100%"
 		},
 		xAxis: {
 			min: -2,
@@ -64,18 +78,19 @@ export default function ScatterLine(props) {
 		yAxis: {
 			show: false
 		},
+		height: 0,
 		series: axises,
 	})
 
 	return (
-		<div className={classes.formControl}>
-			<p>{props.axisName}: {props.axisAverrage}</p>
-			<div className={"scatter-line"}>
+		<div className='scatter-line'>
+			<p>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</p>
+			<div>
 				<p>{props.axisPoints.minus}</p>
-				<ReactEcharts option={getOption()}/>
+				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>
 				<p>{props.axisPoints.plus}</p>
 			</div>
-			<h4>Самая близкая партия на данном графике: {position.title}</h4>
+			<h4>Самая близкая вам партия по взглядам на оси "{props.axisName}" — "{position.title}"</h4>
 		</div>
 	)
 }
