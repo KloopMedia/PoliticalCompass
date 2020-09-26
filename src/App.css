@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
 
-.App{
+.App {
     width: 70%;
     margin: 0 auto;
 }
@@ -44,15 +44,15 @@
     text-align: center;
 }
 
-.questions{
+.questions {
     display: grid;
 }
 
-.questions > div{
-  grid-column-start: 2;
-  grid-column-end: five;
-  grid-row-start: row1-start;
-  grid-row-end: 3;
+.questions > div {
+    grid-column-start: 2;
+    grid-column-end: five;
+    grid-row-start: row1-start;
+    grid-row-end: 3;
 }
 
 
@@ -121,7 +121,18 @@
 
 }
 
+.choose3axis {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+}
+
 .choose_axises {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #555;
+    font-size: 16px;
+
     justify-content: center;
     display: grid;
     grid-gap: 10px;
@@ -135,7 +146,7 @@
     justify-content: space-around;
     align-items: center;
     grid-template-areas:
-    "adf header"
+    "header"
 
 }
 
@@ -145,6 +156,7 @@
 
 .chooseAnswer {
     color: #ED1C24;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 14px;
 
@@ -154,6 +166,13 @@
 
 
 /*scatter-line*/
+.full-result {
+    font-family: 'Roboto', sans-serif;
+
+    font-weight: 800;
+    font-size: 25px;
+}
+
 .scatter-line > div {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -164,6 +183,10 @@
 
 .scatter-line > div > * {
     text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #555;
+    font-size: 16px;
 }
 
 .scatter-line {
@@ -172,16 +195,23 @@
 
 
 .scatter-line > h4 {
-    padding: 10px 0 30px 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 15px 0 30px 0;
     margin: 0;
 }
 
-.scatter-line > p {
+.scatter-line > h5 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+
+    font-size: 17px;
     padding: 0;
     margin: 0;
 }
 
-/*result-position*/
+/*position*/
 .result-position {
     padding-bottom: 60px;
 }
@@ -191,3 +221,90 @@
     margin: 0;
 }
 
+@media only screen and (max-width: 770px) {
+    /*style for question*/
+    .question_title {
+        font-size: 15px;
+    }
+
+    .question_item > span {
+        font-size: 14px;
+    }
+
+    /*style for question END*/
+    /*choosing 2 axises START*/
+    .choose_axises > div > label {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        justify-items: center;
+    }
+
+    .choose_axises > div > label > span:nth-child(2) {
+        font-size: 13px;
+    }
+
+    .choose3axis {
+        font-size: 18px;
+    }
+
+    .full-result {
+        font-size: 18px;
+    }
+
+    /*choosing 2 axises END*/
+    .scatter-line > h4 {
+        font-size: 14px;
+    }
+
+    .scatter-line > h5 {
+        font-size: 13px;
+    }
+
+    .scatter-line > div > p {
+    font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    /*style for question*/
+    .question_title {
+        font-size: 12px;
+    }
+
+    .question_item > span {
+        font-size: 11px;
+    }
+
+    /*style for question END*/
+    /*choosing 2 axises START*/
+    .choose_axises > div > label > span:nth-child(2) {
+        font-size: 13px;
+    }
+    .choose_axises > div > label > span:nth-child(1) {
+        height: 10px;
+    }
+
+    .choose3axis {
+        font-size: 18px;
+    }
+
+    .full-result {
+        font-size: 15px;
+    }
+
+    /*choosing 2 axises END*/
+    .scatter-line > h4 {
+        font-size: 12px;
+    }
+
+    .scatter-line > h5 {
+        font-size: 11px;
+    }
+
+    .scatter-line > div > p {
+    font-size: 11px;
+    }
+
+
+}

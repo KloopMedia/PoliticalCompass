@@ -84,7 +84,7 @@ export default function ScatterLine(props) {
 
 	return (
 		<div className='scatter-line'>
-			<p>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</p>
+			<h5>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
 			<div>
 				<p>{props.axisPoints.minus}</p>
 				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>

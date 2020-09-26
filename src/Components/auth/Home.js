@@ -62,8 +62,8 @@ class Home extends Component {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -364,6 +364,8 @@ class Home extends Component {
 			                     names={this.state.compass_compare.position}
 			                     partyAxises={this.state.compass_compare.axises}
 			                     axisAverrage={this.state.all_axis_averrage[i]}
+			                     // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+			                     // axisPoints={/*this.state.axis_points[i]*/i}
 			                     axisPoints={this.state.axis_points[i]}
 				/>
 			)
@@ -437,7 +439,7 @@ class Home extends Component {
 			if (this.state.questions.length <= this.state.first_questions) {
 				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				return (<div>
-					<h2 className="content-center">Выберите два явления, которые волнуют вас больше всего</h2>
+					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
 					<p className="chooseAnswer padding_margin">{result}</p>
 					<div className="choose_axises">
 						{checkbox}
@@ -448,7 +450,7 @@ class Home extends Component {
 						<h3>Самая близкая для вас партия:</h3>
 						<h2>{this.state.position.title}</h2>
 					</div>
-					<h2>Подробные результаты</h2>
+					<h2 className="content-center full-result">Подробные результаты</h2>
 					{axisAverrage}
 					<br/>
 					<button onClick={previousAndScrollTop}>Previous page</button>
@@ -456,14 +458,38 @@ class Home extends Component {
 					<br/>
 					<button onClick={() => this.saving_data(this.state)}>Save data</button>
 				</div>) //in if
-
+				/*return (<div>
+					{questionList}
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+				</div>) // in else*/
 			} else {
+				/*let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				return (<div>
-						{questionList}
+					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
+					<p className="chooseAnswer padding_margin">{result}</p>
+					<div className="choose_axises">
+						{checkbox}
+					</div>
+					<button onClick={() => onlyTwoCheckbox()}>Показать результаты</button>
+					{chart()}
+					<div className={'result-position'}>
+						<h3>Самая близкая для вас партия:</h3>
+						<h2>{this.state.position.title}</h2>
+					</div>
+					<h2 className="content-center full-result">Подробные результаты</h2>
+					{axisAverrage}
+					<br/>
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+					<br/>
+					<button onClick={() => this.saving_data(this.state)}>Save data</button>
+				</div>) //in if*/
+				return (<div>
+					{questionList}
 					<button onClick={previousAndScrollTop}>Previous page</button>
 					<button onClick={nextAndScrollTop}>Next page</button>
 				</div>) // in else
-
 			}
 		}
 
