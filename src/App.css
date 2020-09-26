@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
 
-.App {
-    width: 50%;
+.App{
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -44,111 +44,77 @@
     text-align: center;
 }
 
-/*radioHorizontal*/
-.question_item_ {
+.questions{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    align-items: center;
-    justify-content: end;
-
 }
 
-.question_item_ > p {
-    justify-self: start;
-
-}
-
-.question_item__answer > div {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr;
-
-    justify-items: center;
+.questions > div{
+  grid-column-start: 2;
+  grid-column-end: five;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
 }
 
 
 /*style for question*/
-.question_title {
+.question_title { /*need it in questions*/
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     margin-bottom: 5px;
     color: #333;
+    font-size: 18px;
 
 }
 
-.padding_margin {
+.padding_margin { /*need it in questions*/
     margin-bottom: 20px;
 }
 
-.question_item {
+.question_item { /*need it in questions answers*/
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: #555;
 
+}
+
+.question_item > span {
+    font-size: 16px;
+}
+
+/*----------style for question ---------*/
+
+@media only screen and (max-width: 770px) {
+    /*style for question*/
+    .question_title {
+        font-size: 15px;
+    }
+
+    .question_item > span {
+        font-size: 14px;
+    }
+
+    /*style for question END*/
+
 
 }
 
-.allAxis {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    justify-items: end;
-}
+@media only screen and (max-width: 470px) {
+    /*style for question*/
+    .question_title {
+        font-size: 12px;
+    }
 
-.axisItem {
-    text-align: center;
-    place-self: center;
-}
+    .question_item > span {
+        font-size: 11px;
+    }
 
-.axisItem > p {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 20px;
-    color: #555555;
-}
+    /*style for question END*/
 
-.axisItem > p > b {
-    color: #333333;
-}
-
-.content-center {
-    text-align: center;
-    padding-bottom: 10px;
 
 }
 
-.choose_axises {
-    justify-content: center;
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, 200px);
-    justify-items: end;
-}
 
-
-.choose_axises > div > label > span:nth-child(2) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: space-around;
-    align-items: center;
-    grid-template-areas:
-    "adf header"
-
-}
-
-.choose_axises > div {
-    padding-bottom: 10px;
-}
-
-
-.chooseAnswer {
-    color: #ED1C24;
-    font-weight: 500;
-    font-size: 14px;
-
-}
-
+/* style in result page START*/
 .content-center {
     text-align: center;
     padding-bottom: 10px;
@@ -163,7 +129,6 @@
     justify-items: end;
 }
 
-
 .choose_axises > div > label > span:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -177,6 +142,15 @@
 .choose_axises > div {
     padding-bottom: 10px;
 }
+
+.chooseAnswer {
+    color: #ED1C24;
+    font-weight: 500;
+    font-size: 14px;
+
+}
+
+/*------style in result page END-----*/
 
 
 /*scatter-line*/
@@ -203,7 +177,7 @@
 }
 
 .scatter-line > p {
-    padding: 0 0 0 0;
+    padding: 0;
     margin: 0;
 }
 
@@ -216,3 +190,4 @@
     padding: 0;
     margin: 0;
 }
+

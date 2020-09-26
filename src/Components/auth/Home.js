@@ -63,7 +63,7 @@ class Home extends Component {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-					fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -350,9 +350,11 @@ class Home extends Component {
 				let index_type = title_values.indexOf(type_answers);
 				let answer = this.state.answer_values[index_type]
 
-				return <RadioButton ans={this.state.answers[this.state.first_questions + i]}
-				                    key={this.state.first_questions + i} index={this.state.first_questions + i} title={el.title}
-				                    message={message} answers={answer} returnAnswer={this.returnAnswer}/>
+				return (
+					<RadioButton ans={this.state.answers[this.state.first_questions + i]}
+					             key={this.state.first_questions + i} index={this.state.first_questions + i} title={el.title}
+					             message={message} answers={answer} returnAnswer={this.returnAnswer}/>
+				)
 			}
 		})
 
@@ -457,7 +459,7 @@ class Home extends Component {
 
 			} else {
 				return (<div>
-					{questionList}
+						{questionList}
 					<button onClick={previousAndScrollTop}>Previous page</button>
 					<button onClick={nextAndScrollTop}>Next page</button>
 				</div>) // in else
