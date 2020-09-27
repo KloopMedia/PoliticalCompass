@@ -127,20 +127,34 @@
     font-size: 20px;
 }
 
+/*.choose_axises {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #555;
+    font-size: 16px;
+    justify-content: center;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 80px);
+    justify-items: end;
+}*/
+
 .choose_axises {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: #555;
     font-size: 16px;
-
     justify-content: center;
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, 200px);
-    justify-items: end;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: auto;
+    column-gap: 10px;
+    row-gap: 15px;
+    justify-items: auto;
+
 }
 
-.choose_axises > div > label > span:nth-child(2) {
+/*.choose_axises > div > label > span:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: space-around;
@@ -148,7 +162,7 @@
     grid-template-areas:
     "header"
 
-}
+}*/
 
 .choose_axises > div {
     padding-bottom: 10px;
@@ -175,7 +189,7 @@
 
 .scatter-line > div > .decision {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     align-items: center;
     justify-content: space-evenly;
@@ -183,9 +197,17 @@
     font-weight: 300;
     color: #474747;
     font-size: 16px;
+    justify-items: center;
 }
 
-.scatter-line > div > .decision > .plus{
+.decision > div > div {
+    width: 2px;
+    height: 50px;
+    background: #2b2b2b;
+
+}
+
+.scatter-line > div > .decision > .plus {
     justify-self: end;
     text-align: right;
 }
@@ -237,13 +259,14 @@
     /*choosing 2 axises START*/
     .choose_axises > div > label {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-
+        grid-template-columns: repeat(auto-fill, 1fr);
+        grid-template-rows: 1fr;
         justify-items: center;
     }
 
     .choose_axises > div > label > span:nth-child(2) {
         font-size: 13px;
+        text-align: center;
     }
 
     .choose3axis {
@@ -263,10 +286,14 @@
         font-size: 13px;
     }
 
-    .scatter-line > div >.decision > p{
+    .scatter-line > div > .decision > p {
         font-size: 13px;
         margin: 0;
         padding: 15px 0 0 0;
+    }
+
+    .decision > div > div {
+        height: 40px;
     }
 
 
@@ -309,10 +336,14 @@
         font-size: 11px;
     }
 
-    .scatter-line > div >.decision > p{
+    .scatter-line > div > .decision > p {
         font-size: 11px;
         margin: 0;
         padding: 10px 0 0 0;
+    }
+
+    .decision > div > div {
+        height: 30px;
     }
 
 

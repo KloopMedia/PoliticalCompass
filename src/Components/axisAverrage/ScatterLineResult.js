@@ -88,6 +88,10 @@ export default function ScatterLine(props) {
 			<div>
 				<div className={"decision"}>
 					<p className={"minus"}>{props.axisPoints.minus}</p>
+					<div>
+						<div>
+						</div>
+					</div>
 					<p className={"plus"}>{props.axisPoints.plus}</p>
 				</div>
 				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>

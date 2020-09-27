@@ -436,7 +436,7 @@ class Home extends Component {
 
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
-				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				return (<div>
 					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
 					<p className="chooseAnswer padding_margin">{result}</p>
