@@ -363,8 +363,8 @@ class Home extends Component {
 			                     axisName={el}
 			                     names={this.state.compass_compare.position}
 			                     partyAxises={this.state.compass_compare.axises}
-					axisAverrage={this.state.all_axis_averrage[i]}
-					                 // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+					// axisAverrage={this.state.all_axis_averrage[i]}
+					                 axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 					                 axisPoints={this.state.axis_points[i]}
 				/>
 			)
@@ -436,6 +436,14 @@ class Home extends Component {
 
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
+				return (<div>
+					{questionList}
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+				</div>) // in else
+
+
+			} else {
 let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				return (<div>
 					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
@@ -457,14 +465,6 @@ let result = this.state.onlyTwoCheckBox ? "" : "Выберите только д
 					<br/>
 					<button onClick={() => this.saving_data(this.state)}>Save data</button>
 				</div>) //in if
-
-			} else {
-
-				return (<div>
-					{questionList}
-					<button onClick={previousAndScrollTop}>Previous page</button>
-					<button onClick={nextAndScrollTop}>Next page</button>
-				</div>) // in else
 
 
 			}

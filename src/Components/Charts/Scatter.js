@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Scatter(props) {
 	const classes = useStyles();
-	const color = ["#3B93EA", "#F7C906","#00405E" , "#552E83", "#010667", "#009749"]
+	const color = ["#3B93EA", "#F7C906", "#00405E", "#552E83", "#010667", "#009749"]
 
 	let axises = props.axises.map((el, i) => {
 		let partyAxis = {
@@ -37,21 +37,29 @@ export default function Scatter(props) {
 		type: 'scatter',
 		color: 'black',
 		emphasis: {
-				label: {
-					show: true,
-					formatter: "Я",
-					position: 'top'
-				}
+			label: {
+				show: true,
+				formatter: "Я",
+				position: 'top'
 			}
+		}
 	})
 	const getOption = () => ({
 		color: color,
-		legend:{
+		legend: {
+			show: true,
 			data: props.names,
 			orient: "horizontal",
-			bottom: "0%",
-			width: "100%"
+		 height:'auto',
+			top: "3%",
+			left: 0,
 		},
+		grid: {
+			z: 2,
+			top: "30%",
+			height: "50%",
+			bottom: "10%"
+  },
 		xAxis: {
 			name: 'x',
 			min: -2,
@@ -68,7 +76,7 @@ export default function Scatter(props) {
 	})
 	return (
 		<div className={classes.formControl}>
-			<ReactEcharts option={getOption()}/>
+			<ReactEcharts style={{height: "500px"}} option={getOption()}/>
 		</div>
 	);
 }
