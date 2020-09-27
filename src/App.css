@@ -144,13 +144,11 @@
     font-weight: 300;
     color: #555;
     font-size: 16px;
-    justify-content: center;
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-template-rows: auto;
-    column-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    column-gap: 30px;
     row-gap: 15px;
-    justify-items: auto;
+    justify-content: space-around;
 
 }
 
@@ -163,10 +161,6 @@
     "header"
 
 }*/
-
-.choose_axises > div {
-    padding-bottom: 10px;
-}
 
 .chooseAnswer {
     color: #ED1C24;
@@ -254,16 +248,10 @@
 
     /*style for question END*/
     /*choosing 2 axises START*/
-    .choose_axises > div > label {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 1fr);
-        grid-template-rows: 1fr;
-        justify-items: center;
-    }
+
 
     .choose_axises > div > label > span:nth-child(2) {
         font-size: 13px;
-        text-align: center;
     }
 
     .choose3axis {
@@ -308,13 +296,13 @@
 
     /*style for question END*/
     /*choosing 2 axises START*/
-    .choose_axises > div > label > span:nth-child(2) {
+    /*.choose_axises > div > label > span:nth-child(2) {
         font-size: 13px;
     }
 
     .choose_axises > div > label > span:nth-child(1) {
         height: 10px;
-    }
+    }*/
 
     .choose3axis {
         font-size: 18px;
