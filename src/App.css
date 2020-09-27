@@ -248,8 +248,6 @@
 
     /*style for question END*/
     /*choosing 2 axises START*/
-
-
     .choose_axises > div > label > span:nth-child(2) {
         font-size: 13px;
     }
@@ -264,11 +262,11 @@
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 14px;
+        font-size: 17px;
     }
 
     .scatter-line > h5 {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .scatter-line > div > .decision > p {
@@ -296,13 +294,13 @@
 
     /*style for question END*/
     /*choosing 2 axises START*/
-    /*.choose_axises > div > label > span:nth-child(2) {
-        font-size: 13px;
+    .choose_axises > div > label > span:nth-child(1) > span:nth-child(1) > svg {
+        font-size: 1rem;
     }
 
-    .choose_axises > div > label > span:nth-child(1) {
-        height: 10px;
-    }*/
+    .choose_axises > div > label > span:nth-child(2) {
+        font-size: 12px;
+    }
 
     .choose3axis {
         font-size: 18px;
@@ -314,11 +312,11 @@
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .scatter-line > h5 {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .scatter-line > div > .decision > p {
@@ -332,4 +330,14 @@
     }
 
 
+}
+
+@media only screen and (max-width: 330px) {
+    .choose_axises {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 30px;
+        row-gap: 15px;
+        justify-content: space-around;
+    }
 }
