@@ -16,7 +16,7 @@ export default function ScatterLine(props) {
 	let minDistance = Infinity
 	let position;
 	let distance = require('euclidean-distance')
-	const color = ["#3B93EA", "#F7C906","#00405E" , "#552E83", "#010667", "#009749"]
+	const color = ["#3B93EA", "#F7C906", "#00405E", "#552E83", "#010667", "#009749"]
 
 	let axises = props.partyAxises.map((el, i) => {
 		let partyAxis = {
@@ -54,18 +54,18 @@ export default function ScatterLine(props) {
 		type: 'scatter',
 		color: 'black',
 		emphasis: {
-				label: {
-					show: true,
-					formatter: "Я",
-					position: 'top'
-				}
+			label: {
+				show: true,
+				formatter: "Я",
+				position: 'top'
 			}
+		}
 	})
 
 
 	const getOption = () => ({
 		color: color,
-		legend:{
+		legend: {
 			data: props.names,
 			orient: "horizontal",
 			bottom: "0%",
@@ -86,9 +86,11 @@ export default function ScatterLine(props) {
 		<div className='scatter-line'>
 			<h5>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
 			<div>
-				<p>{props.axisPoints.minus}</p>
+				<div className={"decision"}>
+					<p className={"minus"}>{props.axisPoints.minus}</p>
+					<p className={"plus"}>{props.axisPoints.plus}</p>
+				</div>
 				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>
-				<p>{props.axisPoints.plus}</p>
 			</div>
 			<h4>Самая близкая вам партия по взглядам на оси "{props.axisName}" — "{position.title}"</h4>
 		</div>

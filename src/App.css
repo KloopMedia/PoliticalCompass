@@ -173,21 +173,23 @@
     font-size: 25px;
 }
 
-.scatter-line > div {
+.scatter-line > div > .decision {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     align-items: center;
-
-}
-
-.scatter-line > div > * {
-    text-align: center;
+    justify-content: space-evenly;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    color: #555;
+    color: #474747;
     font-size: 16px;
 }
+
+.scatter-line > div > .decision > .plus{
+    justify-self: end;
+    text-align: right;
+}
+
 
 .scatter-line {
     padding-bottom: 50px;
@@ -261,9 +263,13 @@
         font-size: 13px;
     }
 
-    .scatter-line > div > p {
-    font-size: 13px;
+    .scatter-line > div >.decision > p{
+        font-size: 13px;
+        margin: 0;
+        padding: 15px 0 0 0;
     }
+
+
 }
 
 @media only screen and (max-width: 470px) {
@@ -281,6 +287,7 @@
     .choose_axises > div > label > span:nth-child(2) {
         font-size: 13px;
     }
+
     .choose_axises > div > label > span:nth-child(1) {
         height: 10px;
     }
@@ -302,8 +309,10 @@
         font-size: 11px;
     }
 
-    .scatter-line > div > p {
-    font-size: 11px;
+    .scatter-line > div >.decision > p{
+        font-size: 11px;
+        margin: 0;
+        padding: 10px 0 0 0;
     }
 
 
