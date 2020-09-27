@@ -425,7 +425,7 @@ class Home extends Component {
 		let onlyTwoCheckbox = () => {
 			let values = Object.values(this.state.axis_names)
 			const countTrue = values.filter(el => el == true)
-			if (countTrue.length < 3) {
+			if (countTrue.length == 2) {
 				this.setState({onlyTwoCheckBox: true})
 				this.getAxis(this.state)
 			} else {

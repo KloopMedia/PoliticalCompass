@@ -87,12 +87,17 @@ export default function ScatterLine(props) {
 			<h5>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
 			<div>
 				<div className={"decision"}>
-					<p className={"minus"}>{props.axisPoints.minus}</p>
+					<p className={"minus"}>
+						{props.axisPoints.minus}<br/>
+						<i className="em em-arrow_left" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
+					</p>
 					<div>
 						<div>
 						</div>
 					</div>
-					<p className={"plus"}>{props.axisPoints.plus}</p>
+					<p className={"plus"}>{props.axisPoints.plus}<br/>
+						<i className="em em-arrow_right" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
+					</p>
 				</div>
 				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>
 			</div>
