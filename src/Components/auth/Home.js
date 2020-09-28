@@ -7,11 +7,12 @@ import firebase from "../../util/firebase";
 import FacebookShareBtn from "../shareBtn/facebookShare";
 import app, {signInWithGoogle, signInAnonymously} from "../../util/firebase";
 import {
-	EmailShareButton,
+	EmailShareButton, FacebookIcon,
 	FacebookShareButton,
 	FacebookShareCount
 } from "react-share";
 import ScatterLine from "../axisAverrage/ScatterLineResult";
+import PartyImage from "../component/PartyImage";
 
 let distance = require('euclidean-distance')
 
@@ -47,6 +48,7 @@ class Home extends Component {
 		showAnswers: false,
 		questions_on_page: 0,
 		first_questions: 0,
+		partyColor: [],
 
 	}
 
@@ -63,7 +65,7 @@ class Home extends Component {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -86,6 +88,7 @@ class Home extends Component {
 						axises_object: data.axises_object,
 						questions_on_page: data.questions_on_page,
 						axis_points: data.axis_points,
+						partyColor: data.partyColor,
 					})
 				});
 		} else {
@@ -319,19 +322,23 @@ class Home extends Component {
 
 	saving_data = (state) => {
 		let part = {
-			// name: currentUser.email,
 			answers: state.answers,
 			axises_averrage: state.all_axis_averrage,
 			axises: state.axises,
 		}
+		const db = firebase.firestore()
 
-		const rootRef = firebase.database().ref().child('parties')
-		const axisesRef = rootRef.push(part)
+		firebase.auth().onAuthStateChanged(function (user) {
+			if (user) {
+				let uid = user.uid;
+				db.collection("users_answers").doc(uid).collection('answers').doc().set(part)
+			}
+		});
+
 	}
 
 
 	render() {
-
 		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
 
 		let questionList = qSet.map((el, i) => {
@@ -356,30 +363,35 @@ class Home extends Component {
 		})
 
 		let axisAverrage = this.state.axis_title.map((el, i) => {
-			return (<ScatterLine index={i}
-			                     axisName={el}
-			                     names={this.state.compass_compare.position}
-			                     partyAxises={this.state.compass_compare.axises}
-			                     axisAverrage={this.state.all_axis_averrage[i]}
-					// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
-					                 axisPoints={this.state.axis_points[i]}
-				/>
-			)
-
-
+			if (el != "Внутренняя политика") {
+				return (<ScatterLine index={i}
+				                     axisName={el}
+				                     names={this.state.compass_compare.position}
+				                     partyAxises={this.state.compass_compare.axises}
+				                     partyColor={this.state.partyColor}
+						axisAverrage={this.state.all_axis_averrage[i]}
+						                 // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+						                 axisPoints={this.state.axis_points[i]}
+					/>
+				)
+			}
 		})
 
 		let checkbox = this.state.axis.map((el, i) => {
-			return (
-				<CheckBox key={i} index={i} name={el} title={this.state.axis_title[i]} returnAxisName={this.returnAxisName}/>
-			)
+			if (el != "b") {
+				return (
+					<CheckBox key={i} index={i} name={el} title={this.state.axis_title[i]} returnAxisName={this.returnAxisName}/>
+				)
+			}
+
 		})
 
 		let chart = () => {
 			if (this.state.axises != {}) {
 				return (
 					<div>
-						<Scatter myAxis={this.state.total_axis} names={this.state.compass_compare.position}
+						<Scatter partyColor={this.state.partyColor} myAxis={this.state.total_axis}
+						         names={this.state.compass_compare.position}
 						         axises={this.state.batch_axises}/>
 					</div>
 				)
@@ -391,22 +403,43 @@ class Home extends Component {
 			let distanceIs;
 			let names = this.state.compass_compare.position
 			let minIs = {
+				idx: "",
 				name: "",
 				distance: Infinity
 			}
 			this.state.compass_compare.axises.map((el, i) => {
 				distanceIs = distance(this.state.all_axis_averrage, el)
-				console.log(distanceIs, names[i])
 				if (distanceIs < minIs.distance) {
+					minIs.idx = i
 					minIs.name = names[i]
 					minIs.distance = distanceIs
 				}
 			})
 
-			return <div className={"resultParty"}>
-				<h3 >Cамая близкая для вас партия По всем осям</h3>
-				<h3>"{minIs.name}"</h3>
-			</div>
+			return (<div>
+				<div className={"resultParty"}>
+					<h3>Ближайшая вам партия:</h3>
+					<h3>«{minIs.name}»</h3>
+				</div>
+
+				<div className={"partyImage"}>
+					<PartyImage partyName={this.state.compass_compare.parties_image_name[minIs.idx]}/>
+				</div>
+				<div className={"facebookBtn"}>
+					<FacebookShareButton
+						className={'fb'}
+						url={`https://kloop.kg/wp-content/uploads/2020/09/${this.state.compass_compare.parties_image_name[minIs.idx]}.png`}
+						quote={"nshsvavds"}
+					>
+						<div>
+							<FacebookIcon
+								size={"2.1rem"}
+							/>
+							<p>Поделиться результатом</p>
+						</div>
+					</FacebookShareButton>
+				</div>
+			</div>)
 		}
 
 		let topFunction = () => {
@@ -454,10 +487,12 @@ class Home extends Component {
 
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
-				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+
+let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
 					{d}
+					<h1 className="content-center moreResult">Более подробные результаты:</h1>
 					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
 					<p className="chooseAnswer padding_margin">{result}</p>
 					<div className="choose_axises">
@@ -469,7 +504,7 @@ class Home extends Component {
 						<h3>Самая близкая для вас партия:</h3>
 						<h2>{this.state.position.title}</h2>
 					</div>
-					<h2 className="content-center full-result">Подробные результаты</h2>
+					<h2 className="content-center full-result">Ещё более подробные результаты:</h2>
 					{axisAverrage}
 					<br/>
 					<button onClick={previousAndScrollTop}>Previous page</button>
@@ -477,23 +512,22 @@ class Home extends Component {
 					<br/>
 					<button onClick={() => this.saving_data(this.state)}>Save data</button>
 				</div>) //in if
-
 			} else {
-				return (<div>
+								return (<div>
 					{questionList}
 					<button onClick={previousAndScrollTop}>Previous page</button>
 					<button onClick={nextAndScrollTop}>Next page</button>
 				</div>) // in else
+
 
 			}
 		}
 
 		return (
 			<div className="App">
-
+				<button onClick={() => app.auth().signOut()}>Sign out</button>
 				<button onClick={() => console.log(this.state)}>show state</button>
 				<button onClick={signInWithGoogle}>Sign in with google</button>
-				<FacebookShareBtn axises={this.state.all_axis_averrage} axises_title={this.state.axis_title}/>
 				{forms()}
 			</div>
 		);

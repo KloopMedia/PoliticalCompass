@@ -16,15 +16,15 @@ export default function ScatterLine(props) {
 	let minDistance = Infinity
 	let position;
 	let distance = require('euclidean-distance')
-	const color = ["#3B93EA", "#F7C906", "#00405E", "#552E83", "#010667", "#009749"]
+	const partyColor = props.partyColor
 
 	let axises = props.partyAxises.map((el, i) => {
 		let partyAxis = {
-			name: props.names[i],
+			name: props.names[i], 
 			symbolSize: 12,
 			data: [[el[props.index], 0]],
 			type: 'scatter',
-			color: color[i],
+			color: partyColor[i],
 			emphasis: {
 				label: {
 					show: true,
@@ -64,7 +64,7 @@ export default function ScatterLine(props) {
 
 
 	const getOption = () => ({
-		color: color,
+		color: partyColor,
 		legend: {
 			data: props.names,
 			orient: "horizontal",

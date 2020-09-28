@@ -75,6 +75,15 @@
     font-weight: 300;
     color: #555;
 
+
+}
+
+.moreResult {
+    font-family: 'Roboto', 'sans-serif';
+    font-weight: 800;
+    font-size: 26px;
+    padding: 20px 0 0 0;
+    margin: 0;
 }
 
 .question_item > span {
@@ -83,35 +92,56 @@
 
 /*----------style for question ---------*/
 
-@media only screen and (max-width: 770px) {
-    /*style for question*/
-    .question_title {
-        font-size: 15px;
-    }
 
-    .question_item > span {
-        font-size: 14px;
-    }
+/*result start*/
 
-    /*style for question END*/
-
+.partyImage > img {
+    display: grid;
+    width: 40%;
+    height: 40%;
+    margin: auto;
+    padding: 0 0 15px 0;
 
 }
 
-@media only screen and (max-width: 470px) {
-    /*style for question*/
-    .question_title {
-        font-size: 12px;
-    }
-
-    .question_item > span {
-        font-size: 11px;
-    }
-
-    /*style for question END*/
-
+.facebookBtn {
+    display: grid;
+    justify-items: center;
+    padding-bottom: 15px;
 
 }
+
+.fb > div {
+    justify-self: center;
+    grid-column-start: 2;
+    grid-column-end: five;
+    grid-row-start: row1-start;
+    grid-row-end: 3;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: 2fr 9fr 1fr;
+    align-items: center;
+    background: #3b5998;
+    color: white;
+    justify-content: center;
+}
+
+.fb > div > * {
+    place-self: center;
+}
+
+.fb > div > p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/*result end*/
 
 
 /* style in result page START*/
@@ -125,27 +155,29 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     font-size: 20px;
+    padding: 0 0 15px 0;
+    margin: 0;
 }
 
-
+.resultParty > h3 {
+    text-align: center;
+}
 
 .resultParty > h3:nth-child(1) {
+    font-family: 'Roboto', 'sans-serif';
+    font-weight: 800;
+    font-size: 25px;
+    padding: 0 0 5px 0;
     margin: 0;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 23px;
 }
 
 .resultParty > h3:nth-child(2) {
+    font-family: 'Roboto', 'sans-serif';
+    font-weight: 800;
+    font-size: 26px;
+    padding: 0 0 15px 0;
     margin: 0;
-    padding-bottom: 15px;
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 21px;
+
 }
 
 .choose_axises {
@@ -171,13 +203,12 @@
 
 /*------style in result page END-----*/
 
-
 /*scatter-line*/
 .full-result {
     font-family: 'Roboto', sans-serif;
 
     font-weight: 800;
-    font-size: 25px;
+    font-size: 26px;
 }
 
 .scatter-line > div > .decision {
@@ -209,23 +240,27 @@
     text-align: left;
 }
 
+.decision > * > i {
+    padding-top: 5px;
+}
+
 .scatter-line {
     padding-bottom: 50px;
 }
 
 .scatter-line > h4 {
     font-family: 'Roboto', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    padding: 15px 0 30px 0;
+    font-weight: 400;
+    font-size: 19px;
+    padding: 13px 0 0 0;
     margin: 0;
 }
 
 .scatter-line > h5 {
     font-family: 'Roboto', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
 
-    font-size: 17px;
+    font-size: 19px;
     padding: 0;
     margin: 0;
 }
@@ -253,7 +288,7 @@
     /*style for question END*/
     /*choosing 2 axises START*/
     .resultParty > h3:nth-child(1) {
-        font-size: 21px;
+        font-size: 20px;
     }
 
     .resultParty > h3:nth-child(2) {
@@ -270,16 +305,16 @@
     }
 
     .full-result {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 17px;
+        font-size: 18px;
     }
 
     .scatter-line > h5 {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .scatter-line > div > .decision > p {
@@ -290,6 +325,26 @@
 
     .decision > div > div {
         height: 40px;
+    }
+
+    .moreResult {
+        font-size: 20px;
+    }
+
+    .facebookBtn {
+        margin: auto;
+
+    }
+
+    .fb > div {
+        display: grid;
+        grid-template-columns: 2fr 9fr 1fr;
+        align-items: center;
+    }
+
+    .fb > div > p {
+        font-size: 13px;
+
     }
 
 
@@ -307,7 +362,6 @@
 
     /*style for question END*/
     /*choosing 2 axises START*/
-
     .resultParty > h3:nth-child(1) {
         font-size: 18px;
     }
@@ -335,11 +389,11 @@
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .scatter-line > h5 {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .scatter-line > div > .decision > p {
@@ -352,6 +406,23 @@
         height: 30px;
     }
 
+    .moreResult {
+        font-size: 17px;
+    }
+
+    .facebookBtn {
+    }
+
+    .fb > div {
+        display: grid;
+        grid-template-columns: 2fr 9fr 1fr;
+        align-items: center;
+    }
+
+    .fb > div > p {
+        font-size: 10px;
+
+    }
 
 }
 
@@ -362,5 +433,18 @@
         column-gap: 30px;
         row-gap: 15px;
         justify-content: space-around;
+    }
+
+    .full-result {
+        font-size: 13px;
+    }
+
+    /*choosing 2 axises END*/
+    .scatter-line > h4 {
+        font-size: 13px;
+    }
+
+    .scatter-line > h5 {
+        font-size: 13px;
     }
 }

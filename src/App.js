@@ -7,17 +7,23 @@ import {
 } from "react-router-dom";
 
 import Home from "./Components/auth/Home";
+import Login from "./Components/auth/Login";
+import PrivateRoute from "./util/PrivateRoute";
+import {AuthProvider} from "./util/Auth";
 
 class App extends Component {
 
 	render() {
 		return (
 			<div>
+				<AuthProvider>
 					<Router>
 						<div>
-							<Route exact path={"/questionnaire/"} component={Home}/>
+							<PrivateRoute exact path={"/questionnaire/"} component={Home}/>
+							<Route exact path={"/questionnaire/login"} component={Login}/>
 						</div>
 					</Router>
+				</AuthProvider>
 			</div>
 		)
 	}

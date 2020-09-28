@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Scatter(props) {
 	const classes = useStyles();
-	const color = ["#3B93EA", "#F7C906", "#00405E", "#552E83", "#010667", "#009749"]
+	const color = props.partyColor
 
 	let axises = props.axises.map((el, i) => {
 		let partyAxis = {
