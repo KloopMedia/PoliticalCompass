@@ -62,8 +62,8 @@ class Home extends Component {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -299,7 +299,6 @@ class Home extends Component {
 			default_axises[item_index] = default_axis
 		})
 
-
 		this.setState({batch_axises: default_axises})
 		this.setState({total_axis: axises})
 		if (axises.length != [0].length) {
@@ -316,8 +315,6 @@ class Home extends Component {
 				this.setState({position: positionInfo})
 			})
 		}
-
-
 	}
 
 	saving_data = (state) => {
@@ -363,8 +360,8 @@ class Home extends Component {
 			                     axisName={el}
 			                     names={this.state.compass_compare.position}
 			                     partyAxises={this.state.compass_compare.axises}
-					// axisAverrage={this.state.all_axis_averrage[i]}
-					                 axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+			                     axisAverrage={this.state.all_axis_averrage[i]}
+					// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 					                 axisPoints={this.state.axis_points[i]}
 				/>
 			)
@@ -388,6 +385,28 @@ class Home extends Component {
 				)
 
 			}
+		}
+
+		let resultParty = () => {
+			let distanceIs;
+			let names = this.state.compass_compare.position
+			let minIs = {
+				name: "",
+				distance: Infinity
+			}
+			this.state.compass_compare.axises.map((el, i) => {
+				distanceIs = distance(this.state.all_axis_averrage, el)
+				console.log(distanceIs, names[i])
+				if (distanceIs < minIs.distance) {
+					minIs.name = names[i]
+					minIs.distance = distanceIs
+				}
+			})
+
+			return <div className={"resultParty"}>
+				<h3 >Cамая близкая для вас партия По всем осям</h3>
+				<h3>"{minIs.name}"</h3>
+			</div>
 		}
 
 		let topFunction = () => {
@@ -433,19 +452,12 @@ class Home extends Component {
 			}
 		}
 
-
 		const forms = () => {
 			if (this.state.questions.length <= this.state.first_questions) {
+				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
-					{questionList}
-					<button onClick={previousAndScrollTop}>Previous page</button>
-					<button onClick={nextAndScrollTop}>Next page</button>
-				</div>) // in else
-
-
-			} else {
-let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
-				return (<div>
+					{d}
 					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
 					<p className="chooseAnswer padding_margin">{result}</p>
 					<div className="choose_axises">
@@ -466,6 +478,12 @@ let result = this.state.onlyTwoCheckBox ? "" : "Выберите только д
 					<button onClick={() => this.saving_data(this.state)}>Save data</button>
 				</div>) //in if
 
+			} else {
+				return (<div>
+					{questionList}
+					<button onClick={previousAndScrollTop}>Previous page</button>
+					<button onClick={nextAndScrollTop}>Next page</button>
+				</div>) // in else
 
 			}
 		}
