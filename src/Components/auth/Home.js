@@ -386,11 +386,19 @@ class Home extends Component {
 
 
 	saving_data = (state) => {
+		const answ = state.answer_values_males[0][state.anket_answers[0]]
+
+		let answers = Object.values(state.answers).map((el,i)=>{
+			let answerIdx = answ.indexOf(el)
+			return {[i]: answerIdx}
+		})
+
+		console.log('answers',answers)
 		let part = {
 			male: state.anket_answers[0],
 			old: state.anket_answers[1],
 			distric: state.anket_answers[2],
-			answers: state.answers,
+			answers: answers,
 			axises_averrage: state.all_axis_averrage,
 			axises: state.axises,
 		}
@@ -398,7 +406,7 @@ class Home extends Component {
 		const db = firebase.firestore().collection("users_answers")
 		let uid;
 		let user = firebase.auth().currentUser
-		if (this.state.saveData == false && !user) {
+		if (this.state.saveData == false) {
 
 			firebase.auth().onAuthStateChanged(function (user) {
 				console.log(user)
@@ -413,7 +421,6 @@ class Home extends Component {
 
 			});
 			this.setState({saveData: true})
-			console.log('saving_data')
 		}
 
 	}
@@ -437,7 +444,6 @@ class Home extends Component {
 				let title_values = this.state.answer_title_values;
 				let index_type = title_values.indexOf(type_answers);
 				let answer = this.state.answer_values_males[index_type][this.state.anket_answers[0]]
-
 				return (
 					<RadioButton ans={this.state.answers[this.state.first_questions + i]}
 					             key={this.state.first_questions + i} index={this.state.first_questions + i} title={el.title}
@@ -454,7 +460,7 @@ class Home extends Component {
 				                     partyAxises={this.state.compass_compare.axises}
 				                     partyColor={this.state.partyColor}
 				                     axisAverrage={this.state.all_axis_averrage[i]}
-						// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+														// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 						                 axisPoints={this.state.axis_points[i]}
 					/>
 				)
@@ -550,7 +556,6 @@ class Home extends Component {
 			if (Object.values(this.state.answers).length == Object.values(this.state.questions).length && Object.values(this.state.answers).length != Object.values({}).length) {
 
 			this.saving_data(this.state)
-			console.log('done')
 
 		}
 
@@ -610,9 +615,7 @@ class Home extends Component {
 					</div>
 				)
 			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
-				/*if (Object.values(this.state.answers).length == Object.values(this.state.questions).length ) {
-					this.saving_data(this.state)
-				}*/
+
 				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
