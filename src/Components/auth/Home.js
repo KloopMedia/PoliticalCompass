@@ -393,7 +393,6 @@ class Home extends Component {
 			return {[i]: answerIdx}
 		})
 
-		console.log('answers',answers)
 		let part = {
 			male: state.anket_answers[0],
 			old: state.anket_answers[1],
@@ -409,10 +408,8 @@ class Home extends Component {
 		if (this.state.saveData == false) {
 
 			firebase.auth().onAuthStateChanged(function (user) {
-				console.log(user)
 				if (user != null) {
 					uid = user.uid
-					console.log('вход')
 					db.doc(uid).collection('answers').doc().set(part).then(console.log('сохранилось'))
 
 				} else if (user == null) {
