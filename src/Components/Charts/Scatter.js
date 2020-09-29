@@ -32,10 +32,10 @@ export default function Scatter(props) {
 	})
 
 	axises.push({
-		symbolSize: 7,
+		symbolSize: 15,
 		data: [props.myAxis],
 		type: 'scatter',
-		color: 'black',
+		color: 'red',
 		emphasis: {
 			label: {
 				show: true,

@@ -4,11 +4,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import "../../App.css"
+
 
 const useStyles = makeStyles((theme) => ({
 	formControl: {
 		minWidth: 120,
 	},
+	li:{
+		fontSize:"15px",
+	}
 }));
 
 export default function SelectBox(props) {
@@ -27,7 +32,7 @@ export default function SelectBox(props) {
 	const handleChange = (event) => {
 		setValue(event.target.value);
 		let id = props.answers.indexOf(event.target.value)
-		props.returnAnswer(event.target.value, index, id)
+		props.returnAnketsAnswer(event.target.value, index)
 	};
 
 	const handleClose = (event) => {
@@ -40,7 +45,7 @@ export default function SelectBox(props) {
 
 	return (
 		<div>
-			<h4>{props.title}</h4>
+			<h4 className={"question_title"}>{props.title}</h4>
 			<FormControl className={classes.formControl} disabled={props.locked ? true : false}>
 				<InputLabel id="controlled-open-select-label">Выбрать</InputLabel>
 				<Select
@@ -51,8 +56,7 @@ export default function SelectBox(props) {
 					onOpen={handleOpen}
 					value={value}
 					onChange={handleChange}>
-					<MenuItem value={""}><em>None</em></MenuItem>
-					{props.answers.map((el, i) => <MenuItem key={i} value={el}>{el}</MenuItem>)}
+					{props.answers.map((el, i) => <MenuItem className={classes.li} key={i} value={el.value}>{el.name}</MenuItem>)}
 				</Select>
 			</FormControl>
 		</div>

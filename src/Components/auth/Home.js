@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from "react";
 import '../../App.css'
 import RadioButton from "../form/radiobutton";
 import CheckBox from "../form/checkBox";
+import SelectBox from "../form/SelectBox";
 import Scatter from "../Charts/Scatter";
 import firebase from "../../util/firebase";
 import FacebookShareBtn from "../shareBtn/facebookShare";
@@ -38,7 +39,8 @@ class Home extends Component {
 		axis_names: {},
 		all_axis: {},
 		answer_title_values: [],
-		answer_values: [],
+		answer_values: ["da"],
+		answer_values_males: [],
 		count_axises: [],
 		compass_compare: {},
 		default_axises: [],
@@ -49,6 +51,14 @@ class Home extends Component {
 		questions_on_page: 0,
 		first_questions: 0,
 		partyColor: [],
+		anket: false,
+		anket_all_answers: 1,
+		anketa_questions: [],
+		anket_answers: [],
+		axis_legends: [],
+		legendary:[],
+		nearestParty:{},
+		compass_url:""
 
 	}
 
@@ -61,11 +71,10 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
+				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -84,11 +93,14 @@ class Home extends Component {
 						axis_title_values: data.axis_title_values,
 						axis_values: data.axis_values,
 						answer_title_values: data.answer_title_values,
-						answer_values: data.answer_values,
+						answer_values_males: data.answer_values,
 						axises_object: data.axises_object,
 						questions_on_page: data.questions_on_page,
 						axis_points: data.axis_points,
 						partyColor: data.partyColor,
+						anketa_questions: data.anket,
+						axis_legends: data.axis_legends,
+						compass_url: data.compass_url,
 					})
 				});
 		} else {
@@ -145,6 +157,12 @@ class Home extends Component {
 		let answers = {...this.state.answers}
 		answers[index] = answer
 		this.setState({answers: answers})
+	}
+
+	returnAnketsAnswer = (answer, index) => {
+		let answers = {...this.state.anket_answers}
+		answers[index] = answer
+		this.setState({anket_answers: answers})
 	}
 
 	returnAxisName = (axis_name, index) => {
@@ -204,7 +222,7 @@ class Home extends Component {
 			answer = item[1]
 			let answer_type = state.questions[index_question].answer;
 			let answer_type_index = state.answer_title_values.indexOf(answer_type)
-			let answers_item = state.answer_values[answer_type_index]
+			let answers_item = state.answer_values_males[answer_type_index][state.anket_answers[0]]
 			let answer_index = answers_item.indexOf(answer)
 
 			let axis_type = state.questions[index_question].axis;
@@ -320,8 +338,54 @@ class Home extends Component {
 		}
 	}
 
+	legendByAxis = () => {
+			let legendsByAxis=[]
+			let legendIs =this.state.axis_legends.map((el, i) => {
+				let itIs;
+				let legends = Object.values(el)
+				let indexAxisByName = this.state.axis_title.indexOf(el.name)
+				let axis = this.state.all_axis_averrage[indexAxisByName]
+				if (-2 <= axis && axis < -1.11) {
+					itIs = 1
+
+				} else if (-1.10 < axis && axis < -0.61) {
+					itIs = 2
+
+				} else if (-0.60 < axis && axis < -0.21) {
+					itIs = 3
+
+				} else if (-0.20 < axis && axis < 0.20) {
+					itIs = 4
+
+				} else if (0.21 < axis && axis < 0.60) {
+					itIs = 5
+
+				} else if (-0.61 < axis && axis < 1.10) {
+					itIs = 6
+
+				} else if (-1.11 < axis && axis <= 2.00) {
+					itIs = 7
+
+				}
+
+				legendsByAxis[i] = itIs
+				return (<div>
+					<p>{legends[itIs]}</p>
+				</div>)
+			})
+
+		if (this.state.legendary.length == [].length){
+			this.setState({legendary: legendsByAxis})
+		}
+			return legendIs
+		}
+
+
 	saving_data = (state) => {
 		let part = {
+			male: state.anket_answers[0],
+			old: state.anket_answers[1],
+			distric: state.anket_answers[2],
 			answers: state.answers,
 			axises_averrage: state.all_axis_averrage,
 			axises: state.axises,
@@ -339,8 +403,8 @@ class Home extends Component {
 
 
 	render() {
-		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
 
+		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
 		let questionList = qSet.map((el, i) => {
 			let message;
 			if (el.type === 'select') {
@@ -349,10 +413,11 @@ class Home extends Component {
 				} else {
 					message = ''
 				}
+
 				let type_answers = el.answer;
 				let title_values = this.state.answer_title_values;
 				let index_type = title_values.indexOf(type_answers);
-				let answer = this.state.answer_values[index_type]
+				let answer = this.state.answer_values_males[index_type][this.state.anket_answers[0]]
 
 				return (
 					<RadioButton ans={this.state.answers[this.state.first_questions + i]}
@@ -369,8 +434,8 @@ class Home extends Component {
 				                     names={this.state.compass_compare.position}
 				                     partyAxises={this.state.compass_compare.axises}
 				                     partyColor={this.state.partyColor}
-						axisAverrage={this.state.all_axis_averrage[i]}
-						                 // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+						// axisAverrage={this.state.all_axis_averrage[i]}
+						                 axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 						                 axisPoints={this.state.axis_points[i]}
 					/>
 				)
@@ -385,6 +450,7 @@ class Home extends Component {
 			}
 
 		})
+
 
 		let chart = () => {
 			if (this.state.axises != {}) {
@@ -415,7 +481,9 @@ class Home extends Component {
 					minIs.distance = distanceIs
 				}
 			})
-
+			if(Object.values(this.state.nearestParty).length == Object.values({}).length) {
+				this.setState({nearestParty: minIs})
+			}
 			return (<div>
 				<div className={"resultParty"}>
 					<h3>Ближайшая вам партия:</h3>
@@ -425,19 +493,21 @@ class Home extends Component {
 				<div className={"partyImage"}>
 					<PartyImage partyName={this.state.compass_compare.parties_image_name[minIs.idx]}/>
 				</div>
+				<div className={"resultParty"}>
+					<h3>Ваш политический автопортрет на основе ответов:</h3>
+					<div className={"myLegends"}>
+						{this.legendByAxis()}
+					</div>
+				</div>
+
 				<div className={"facebookBtn"}>
-					<FacebookShareButton
+					<FacebookShareBtn
 						className={'fb'}
-						url={`https://kloop.kg/wp-content/uploads/2020/09/${this.state.compass_compare.parties_image_name[minIs.idx]}.png`}
-						quote={"nshsvavds"}
-					>
-						<div>
-							<FacebookIcon
-								size={"2.1rem"}
-							/>
-							<p>Поделиться результатом</p>
-						</div>
-					</FacebookShareButton>
+						name={this.state.compass_compare.parties_image_name[minIs.idx]}
+						legends={this.state.axis_legends}
+						indexLegends={this.state.legendary}
+						compass_url={this.state.compass_url}
+					/>
 				</div>
 			</div>)
 		}
@@ -485,10 +555,36 @@ class Home extends Component {
 			}
 		}
 
-		const forms = () => {
-			if (this.state.questions.length <= this.state.first_questions) {
+		let anket = this.state.anketa_questions.map((el, i) => {
+			return <SelectBox key={i} index={i} title={el.title} answers={el.answer}
+			                  returnAnketsAnswer={this.returnAnketsAnswer}/>
+		})
 
-let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+
+		let doneAnket = () => {
+			if (Object.keys(this.state.anket_answers).length == this.state.anketa_questions.length) {
+				this.setState({
+					anket_all_answers: true,
+					anket: true
+				})
+			} else {
+				this.setState({anket_all_answers: false})
+			}
+
+		}
+
+		const forms = () => {
+			if (this.state.anket == false) {
+				let answers = (this.state.anket_all_answers == false) ? "Вам следуюет ответить на все вопросы" : ""
+				return (
+					<div>
+						<p className={"chooseAnswer padding_margin"}>{answers}</p>
+						{anket}
+						<button onClick={() => doneAnket()}>Начать!</button>
+					</div>
+				)
+			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
+				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
 					{d}
@@ -513,12 +609,11 @@ let result = this.state.onlyTwoCheckBox ? "" : "Выберите только д
 					<button onClick={() => this.saving_data(this.state)}>Save data</button>
 				</div>) //in if
 			} else {
-								return (<div>
+				return (<div>
 					{questionList}
 					<button onClick={previousAndScrollTop}>Previous page</button>
 					<button onClick={nextAndScrollTop}>Next page</button>
 				</div>) // in else
-
 
 			}
 		}
