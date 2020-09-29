@@ -434,8 +434,8 @@ class Home extends Component {
 				                     names={this.state.compass_compare.position}
 				                     partyAxises={this.state.compass_compare.axises}
 				                     partyColor={this.state.partyColor}
-						// axisAverrage={this.state.all_axis_averrage[i]}
-						                 axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+						axisAverrage={this.state.all_axis_averrage[i]}
+						                 // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 						                 axisPoints={this.state.axis_points[i]}
 					/>
 				)
