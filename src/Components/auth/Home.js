@@ -14,6 +14,8 @@ import {
 } from "react-share";
 import ScatterLine from "../axisAverrage/ScatterLineResult";
 import PartyImage from "../component/PartyImage";
+import ReactGA from 'react-ga';
+import {onLog} from "firebase";
 
 let distance = require('euclidean-distance')
 
@@ -56,9 +58,11 @@ class Home extends Component {
 		anketa_questions: [],
 		anket_answers: [],
 		axis_legends: [],
-		legendary:[],
-		nearestParty:{},
-		compass_url:""
+		legendary: [],
+		nearestParty: {},
+		compass_url: "",
+		saveData: false,
+		uid: false
 
 	}
 
@@ -339,46 +343,46 @@ class Home extends Component {
 	}
 
 	legendByAxis = () => {
-			let legendsByAxis=[]
-			let legendIs =this.state.axis_legends.map((el, i) => {
-				let itIs;
-				let legends = Object.values(el)
-				let indexAxisByName = this.state.axis_title.indexOf(el.name)
-				let axis = this.state.all_axis_averrage[indexAxisByName]
-				if (-2 <= axis && axis < -1.11) {
-					itIs = 1
+		let legendsByAxis = []
+		let legendIs = this.state.axis_legends.map((el, i) => {
+			let itIs;
+			let legends = Object.values(el)
+			let indexAxisByName = this.state.axis_title.indexOf(el.name)
+			let axis = this.state.all_axis_averrage[indexAxisByName]
+			if (-2 <= axis && axis < -1.11) {
+				itIs = 1
 
-				} else if (-1.10 < axis && axis < -0.61) {
-					itIs = 2
+			} else if (-1.10 < axis && axis < -0.61) {
+				itIs = 2
 
-				} else if (-0.60 < axis && axis < -0.21) {
-					itIs = 3
+			} else if (-0.60 < axis && axis < -0.21) {
+				itIs = 3
 
-				} else if (-0.20 < axis && axis < 0.20) {
-					itIs = 4
+			} else if (-0.20 < axis && axis < 0.20) {
+				itIs = 4
 
-				} else if (0.21 < axis && axis < 0.60) {
-					itIs = 5
+			} else if (0.21 < axis && axis < 0.60) {
+				itIs = 5
 
-				} else if (-0.61 < axis && axis < 1.10) {
-					itIs = 6
+			} else if (-0.61 < axis && axis < 1.10) {
+				itIs = 6
 
-				} else if (-1.11 < axis && axis <= 2.00) {
-					itIs = 7
+			} else if (-1.11 < axis && axis <= 2.00) {
+				itIs = 7
 
-				}
+			}
 
-				legendsByAxis[i] = itIs
-				return (<div>
-					<p>{legends[itIs]}</p>
-				</div>)
-			})
+			legendsByAxis[i] = itIs
+			return (<div>
+				<p>{legends[itIs]}</p>
+			</div>)
+		})
 
-		if (this.state.legendary.length == [].length){
+		if (this.state.legendary.length == [].length) {
 			this.setState({legendary: legendsByAxis})
 		}
-			return legendIs
-		}
+		return legendIs
+	}
 
 
 	saving_data = (state) => {
@@ -390,19 +394,34 @@ class Home extends Component {
 			axises_averrage: state.all_axis_averrage,
 			axises: state.axises,
 		}
-		const db = firebase.firestore()
 
-		firebase.auth().onAuthStateChanged(function (user) {
-			if (user) {
-				let uid = user.uid;
-				db.collection("users_answers").doc(uid).collection('answers').doc().set(part)
-			}
-		});
+		const db = firebase.firestore().collection("users_answers")
+		let uid;
+		let user = firebase.auth().currentUser
+		if (this.state.saveData == false && !user) {
+
+			firebase.auth().onAuthStateChanged(function (user) {
+				console.log(user)
+				if (user != null) {
+					uid = user.uid
+					console.log('вход')
+					db.doc(uid).collection('answers').doc().set(part).then(console.log('сохранилось'))
+
+				} else if (user == null) {
+					signInAnonymously()
+				}
+
+			});
+			this.setState({saveData: true})
+			console.log('saving_data')
+		}
 
 	}
 
 
 	render() {
+		let user = firebase.auth().currentUser
+
 
 		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
 		let questionList = qSet.map((el, i) => {
@@ -434,8 +453,8 @@ class Home extends Component {
 				                     names={this.state.compass_compare.position}
 				                     partyAxises={this.state.compass_compare.axises}
 				                     partyColor={this.state.partyColor}
-						axisAverrage={this.state.all_axis_averrage[i]}
-						                 // axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+				                     axisAverrage={this.state.all_axis_averrage[i]}
+						// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 						                 axisPoints={this.state.axis_points[i]}
 					/>
 				)
@@ -450,7 +469,6 @@ class Home extends Component {
 			}
 
 		})
-
 
 		let chart = () => {
 			if (this.state.axises != {}) {
@@ -481,7 +499,7 @@ class Home extends Component {
 					minIs.distance = distanceIs
 				}
 			})
-			if(Object.values(this.state.nearestParty).length == Object.values({}).length) {
+			if (Object.values(this.state.nearestParty).length == Object.values({}).length) {
 				this.setState({nearestParty: minIs})
 			}
 			return (<div>
@@ -528,6 +546,13 @@ class Home extends Component {
 			} else {
 				this.setState({notAnswered: whichNotAnswered})
 			}
+
+			if (Object.values(this.state.answers).length == Object.values(this.state.questions).length && Object.values(this.state.answers).length != Object.values({}).length) {
+
+			this.saving_data(this.state)
+			console.log('done')
+
+		}
 
 		}
 
@@ -576,6 +601,7 @@ class Home extends Component {
 		const forms = () => {
 			if (this.state.anket == false) {
 				let answers = (this.state.anket_all_answers == false) ? "Вам следуюет ответить на все вопросы" : ""
+
 				return (
 					<div>
 						<p className={"chooseAnswer padding_margin"}>{answers}</p>
@@ -584,6 +610,9 @@ class Home extends Component {
 					</div>
 				)
 			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
+				/*if (Object.values(this.state.answers).length == Object.values(this.state.questions).length ) {
+					this.saving_data(this.state)
+				}*/
 				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
@@ -602,11 +631,8 @@ class Home extends Component {
 					</div>
 					<h2 className="content-center full-result">Ещё более подробные результаты:</h2>
 					{axisAverrage}
-					<br/>
-					<button onClick={previousAndScrollTop}>Previous page</button>
-					<button onClick={nextAndScrollTop}>Next page</button>
-					<br/>
-					<button onClick={() => this.saving_data(this.state)}>Save data</button>
+
+
 				</div>) //in if
 			} else {
 				return (<div>
@@ -620,6 +646,8 @@ class Home extends Component {
 
 		return (
 			<div className="App">
+				<button onClick={() => this.saving_data(this.state)}>Save data</button>
+				<button onClick={() => this.defaultAuth()}>defaultAuth</button>
 				<button onClick={() => app.auth().signOut()}>Sign out</button>
 				<button onClick={() => console.log(this.state)}>show state</button>
 				<button onClick={signInWithGoogle}>Sign in with google</button>

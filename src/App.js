@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useEffect, Component} from 'react';
 import './App.css';
 
 import {
@@ -7,26 +7,29 @@ import {
 } from "react-router-dom";
 
 import Home from "./Components/auth/Home";
-import Login from "./Components/auth/Login";
-import PrivateRoute from "./util/PrivateRoute";
-import {AuthProvider} from "./util/Auth";
+import ReactGa from "react-ga"
 
-class App extends Component {
+function App(){
 
-	render() {
+
+		useEffect(()=>{
+			ReactGa.initialize('UA-179274271-1')
+			ReactGa.pageview(window.location.pathname + window.location.search)
+		},[])
+
 		return (
 			<div>
-				<AuthProvider>
+				{/*<AuthProvider>*/}
 					<Router>
 						<div>
-							<PrivateRoute exact path={"/questionnaire/"} component={Home}/>
-							<Route exact path={"/questionnaire/login"} component={Login}/>
+							{/*<PrivateRoute exact path={"/questionnaire/"} component={Home}/>*/}
+							{/*<Route exact path={"/questionnaire/login"} component={Login}/>*/}
+							<Route exact path={"/questionnaire/"} component={Home}/>
 						</div>
 					</Router>
-				</AuthProvider>
+				{/*</AuthProvider>*/}
 			</div>
 		)
-	}
 
 }
 
