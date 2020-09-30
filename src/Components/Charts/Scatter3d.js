@@ -39,5 +39,3 @@ export default function Scatter3d(props) {
 		</div>
 	);
 }
-
-//<Scatter3d myAxis={this.state.total_axis} axises={this.state.compass_compare}/>

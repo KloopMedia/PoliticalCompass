@@ -20,7 +20,7 @@ export default function ScatterLine(props) {
 
 	let axises = props.partyAxises.map((el, i) => {
 		let partyAxis = {
-			name: props.names[i], 
+			name: props.names[i],
 			symbolSize: 12,
 			data: [[el[props.index], 0]],
 			type: 'scatter',
@@ -49,10 +49,18 @@ export default function ScatterLine(props) {
 	})
 
 	axises.push({
-		symbolSize: 13,
+		symbolSize: 22,
 		data: [[props.axisAverrage, 0]],
 		type: 'scatter',
 		color: 'red',
+		symbol: "diamond",
+		label: {
+			show: true,
+			position: 'top',
+			formatter: "Я",
+			fontWeight: "bold"
+
+		},
 		emphasis: {
 			label: {
 				show: true,
@@ -69,7 +77,7 @@ export default function ScatterLine(props) {
 			data: props.names,
 			orient: "horizontal",
 			bottom: "0%",
-			width: "100%"
+			width: "100%",
 		},
 		xAxis: {
 			min: -2,
@@ -84,24 +92,28 @@ export default function ScatterLine(props) {
 
 	return (
 		<div className='scatter-line'>
-			<h5 style={{textAlign:"center"}}>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
+			<div className={"nameAxis"}>
+				<h5 style={{textAlign: "center"}}>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
+			</div>
 			<div>
 				<div className={"decision"}>
 					<p className={"minus"}>
 						{props.axisPoints.minus}<br/>
-						<i className="em em-arrow_left" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
 					</p>
 					<div>
 						<div>
 						</div>
 					</div>
 					<p className={"plus"}>{props.axisPoints.plus}<br/>
-						<i className="em em-arrow_right" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
 					</p>
 				</div>
-				<ReactEcharts style={{height: "200px"}} className={`scatter`} option={getOption()}/>
+				<div className={"arrows"}>
+					<i className="em em-arrow_left" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
+					<i className="em em-arrow_right" aria-role="presentation" aria-label="LEFTWARDS BLACK ARROW"></i>
+				</div>
+				<ReactEcharts style={{height: "250px"}} className={`scatter`} option={getOption()}/>
 			</div>
-			<h4>Самая близкая вам партия по взглядам на оси "{props.axisName}" — "{position.title}"</h4>
+			<h4>{props.axisNearest} — "{position.title}"</h4>
 		</div>
 	)
 }

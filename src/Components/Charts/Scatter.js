@@ -32,10 +32,19 @@ export default function Scatter(props) {
 	})
 
 	axises.push({
-		symbolSize: 15,
+		symbolSize: 22,
 		data: [props.myAxis],
 		type: 'scatter',
+		symbol: "diamond",
+
 		color: 'red',
+		label: {
+			show: true,
+			position: 'top',
+			formatter: "Я",
+			fontWeight: "bold"
+
+		},
 		emphasis: {
 			label: {
 				show: true,
@@ -50,7 +59,7 @@ export default function Scatter(props) {
 			show: true,
 			data: props.names,
 			orient: "horizontal",
-		 height:'auto',
+			height: 'auto',
 			top: "3%",
 			left: 0,
 		},
@@ -59,7 +68,7 @@ export default function Scatter(props) {
 			top: "30%",
 			height: "50%",
 			bottom: "10%"
-  },
+		},
 		xAxis: {
 			name: 'x',
 			min: -2,

@@ -52,7 +52,19 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    padding-top: 25px;
+}
+
+.enter {
+    display: grid;
+    grid-template-columns:  1fr 1fr 1fr;
+    grid-auto-flow: dense;
+
+
+}
+
+.enter > * {
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
 
 .pagination {
@@ -65,9 +77,44 @@
     grid-column-gap: 20px;
 }
 
-.signinGoogle{
-        background-color: #d03d2f;
+.signinGoogle {
+    background-color: #d03d2f;
+    margin: 10px 0 35px 0;
+}
 
+.enterByEmail {
+    padding-top: 10px;
+    color: #d03d2f;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+
+}
+
+
+.enterByEmail > * {
+    margin: 0;
+
+}
+
+.notEnterByEmail > p:nth-child(1) {
+    margin: 0 0 0 0;
+    padding: 25px 0 0 0;
+
+}
+
+.notEnterByEmail > p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+
+}
+
+.legend > p {
+    margin-top: 7px;
 }
 
 button {
@@ -77,7 +124,6 @@ button {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 13px;
-    margin: 25px 0;
     height: 50%;
     transform: none;
     padding: 7px 40px;
@@ -86,6 +132,8 @@ button {
     transition: all 0.4s ease 0s;
     place-self: center;
     outline: none;
+    margin: 15px 0 35px 0;
+
 }
 
 button:hover {
@@ -151,7 +199,7 @@ button:hover {
 .myLegends {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px;
+    column-gap: 60px;
     row-gap: 15px;
 }
 
@@ -225,7 +273,7 @@ button:hover {
     font-family: 'Roboto', 'sans-serif';
     font-weight: 800;
     font-size: 25px;
-    padding: 0 0 5px 0;
+    padding: 20px 0 13px 0;
     margin: 0;
 }
 
@@ -291,11 +339,33 @@ button:hover {
 .scatter-line > div > .decision > .plus {
     justify-self: end;
     text-align: right;
+    padding-left: 5px;
+
 }
 
 .scatter-line > div > .decision > .minus {
     justify-self: start;
     text-align: left;
+    padding-right: 5px;
+}
+
+
+.arrows {
+    display: flex;
+    justify-content: space-between;
+        padding-top: 5px;
+
+}
+.partyImage{
+    text-align: center;
+}
+.partyImage > a {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    text-decoration: none;
+    border-bottom: 1px solid black;
 }
 
 .decision > * > i {
@@ -310,18 +380,34 @@ button:hover {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 19px;
-    padding: 13px 0 0 0;
+    padding: 19px 0 0 15px;
     margin: 0;
 }
 
+.scatter-line > .nameAxis{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
 
-.scatter-line > h5 {
+.scatter-line > .nameAxis > h5 {
+    align-items: center;
+    border: 2px solid #6d6d6d;
+
     font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 19px;
-    padding: 0;
-    margin: 0;
-    padding-bottom: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    transform: none;
+    padding: 7px 40px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s ease 0s;
+    place-self: center;
+    outline: none;
+    margin: 15px 0 35px 0;
+
+
+
 }
 
 .legend > h5 {
@@ -348,6 +434,11 @@ button:hover {
 }
 
 @media only screen and (max-width: 770px) {
+    .notEnterByEmail > p {
+        font-size: 14px;
+
+    }
+
     button {
         font-size: 11px;
         padding: 7px 25px;
@@ -394,8 +485,8 @@ button:hover {
         font-size: 20px;
     }
 
-    .scatter-line > h5 {
-        font-size: 20px;
+    .scatter-line > .nameAxis > h5 {
+        font-size: 17px;
     }
 
     .legend > h5 {
@@ -436,6 +527,11 @@ button:hover {
 }
 
 @media only screen and (max-width: 470px) {
+    .notEnterByEmail > p {
+        font-size: 12px;
+
+    }
+
     button {
         font-size: 10px;
 
@@ -487,9 +583,10 @@ button:hover {
         font-size: 18px;
     }
 
-    .scatter-line > h5 {
-        font-size: 18px;
+    .scatter-line > .nameAxis > h5 {
+        font-size: 16px;
     }
+
     .legend > h5 {
         font-size: 18px;
     }
@@ -525,6 +622,11 @@ button:hover {
 }
 
 @media only screen and (max-width: 330px) {
+    .notEnterByEmail > p {
+        font-size: 13px;
+
+    }
+
     button {
         font-size: 10px;
         padding: 7px 20px;
@@ -547,7 +649,7 @@ button:hover {
         font-size: 15px;
     }
 
-    .scatter-line > h5 {
+    .scatter-line > .nameAxis > h5 {
         font-size: 15px;
     }
 

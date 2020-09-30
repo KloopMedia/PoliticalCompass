@@ -62,7 +62,9 @@ class Home extends Component {
 		nearestParty: {},
 		compass_url: "",
 		saveData: false,
-		uid: false
+		uid: false,
+		user: false,
+		axisNearest: []
 
 	}
 
@@ -75,10 +77,7 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -105,6 +104,7 @@ class Home extends Component {
 						anketa_questions: data.anket,
 						axis_legends: data.axis_legends,
 						compass_url: data.compass_url,
+						axisNearest: data.axisNearest,
 					})
 				});
 		} else {
@@ -346,6 +346,7 @@ class Home extends Component {
 		let legendsByAxis = []
 		let legendIs = this.state.axis_legends.map((el, i) => {
 			let itIs;
+
 			let legends = Object.values(el)
 			let indexAxisByName = this.state.axis_title.indexOf(el.name)
 			let axis = this.state.all_axis_averrage[indexAxisByName]
@@ -374,7 +375,7 @@ class Home extends Component {
 
 			legendsByAxis[i] = itIs
 			return (<div className={"legend"}>
-				<h5>{this.state.axis_title[i]}</h5>
+				<h5>{el.name}:</h5>
 				<p>{legends[itIs]}</p>
 			</div>)
 		})
@@ -384,7 +385,6 @@ class Home extends Component {
 		}
 		return legendIs
 	}
-
 
 	saving_data = (state) => {
 		const answ = state.answer_values_males[0][state.anket_answers[0]]
@@ -423,9 +423,18 @@ class Home extends Component {
 
 	}
 
+	signInWithGoogleUser = () => {
+		console.log('вхожу через гугл')
+		firebase.auth().onAuthStateChanged(function (user) {
+			signInWithGoogle()
+
+		})
+
+		this.setState({user: true})
+
+	}
 
 	render() {
-		let user = firebase.auth().currentUser
 
 
 		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
@@ -444,7 +453,8 @@ class Home extends Component {
 				let answer = this.state.answer_values_males[index_type][this.state.anket_answers[0]]
 				return (
 					<RadioButton ans={this.state.answers[this.state.first_questions + i]}
-					             key={this.state.first_questions + i} index={this.state.first_questions + i} title={el.title}
+					             key={this.state.first_questions + i} id={i} index={this.state.first_questions + i}
+					             title={el.title}
 					             message={message} answers={answer} returnAnswer={this.returnAnswer}/>
 				)
 			}
@@ -456,8 +466,8 @@ class Home extends Component {
 			                     names={this.state.compass_compare.position}
 			                     partyAxises={this.state.compass_compare.axises}
 			                     partyColor={this.state.partyColor}
+			                     axisNearest={this.state.axisNearest[i]}
 			                     axisAverrage={this.state.all_axis_averrage[i]}
-					// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 					                 axisPoints={this.state.axis_points[i]}
 				/>
 			)
@@ -511,7 +521,9 @@ class Home extends Component {
 				</div>
 
 				<div className={"partyImage"}>
-					<PartyImage partyName={this.state.compass_compare.parties_image_name[minIs.idx]}/>
+					<PartyImage partyLink={minIs.idx} partyName={this.state.compass_compare.parties_image_name[minIs.idx]}/>
+					<a href={this.state.compass_compare.about_parties[minIs.idx]}>Узнайте больше об этой партии</a>
+
 				</div>
 				<div className={"resultParty"}>
 					<h3>Ваш политический автопортрет на основе ответов:</h3>
@@ -539,6 +551,7 @@ class Home extends Component {
 
 		let nextAndScrollTop = () => {
 			let whichNotAnswered = this.getNotAnswered(this.state, "plus");
+			console.log(whichNotAnswered)
 			if (whichNotAnswered.length == 0) {
 				this.getAxis(this.state)
 				this.setState({first_questions: this.state.first_questions + this.state.questions_on_page});
@@ -606,24 +619,37 @@ class Home extends Component {
 		const forms = () => {
 			if (this.state.anket == false) {
 				let answers = (this.state.anket_all_answers == false) ? "Вам следует ответить на все вопросы" : ""
-
+				let userIs = (this.state.user == true) ? (<div className={"enterByEmail"}>
+						<p>Вы вошли через google</p>
+						<p>Теперь жмите сюда:</p>
+					</div>) :
+					(<div className={"notEnterByEmail"}>
+						<p>Если хотите в будущем найти единомышленников среди других пользователей, нажмите сюда и у нас сохранятся
+							ваше имя и email:</p>
+						<button className={"signinGoogle"} onClick={() => this.signInWithGoogleUser()}>Войти через google</button>
+						<p>Можно и не входить в Google тогда просто сразу жмите сюда:</p>
+					</div>)
 				return (
 					<div style={{textAlign: "center"}}>
 						<p className={"chooseAnswer padding_margin"}>{answers}</p>
 						{anket}
+						<div className={"enter"}>
+							{userIs}
+						</div>
 						<div className={"buttons"}>
 							<button onClick={() => doneAnket()}>Начать</button>
 						</div>
 					</div>
 				)
 			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
-
-				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
 					{d}
-					<h1 className="content-center moreResult">Более подробные результаты:</h1>
-					<h2 className="content-center choose3axis">Выберите два явления, которые волнуют вас больше всего</h2>
+					<h2 className="content-center full-result">Развёрнутые результаты:</h2>
+					{axisAverrage}
+					<h1 className="content-center moreResult">Поиграйтесь с результатами! Выведите их на график!</h1>
+					<h2 className="content-center choose3axis">Выберите два явления, которые вы хотите отобразить:</h2>
 					<p className="chooseAnswer padding_margin">{result}</p>
 					<div className="choose_axises">
 						{checkbox}
@@ -633,15 +659,15 @@ class Home extends Component {
 					</div>
 					{chart()}
 					<div className={'result-position'}>
-						<h3>Самая близкая для вас партия:</h3>
+						<h3>Ближайшая вам партия по выбранным осям:</h3>
 						<h2>{this.state.position.title}</h2>
 					</div>
-					<h2 className="content-center full-result">Ещё более подробные результаты:</h2>
-					{axisAverrage}
 
 
 				</div>) //in if
+
 			} else {
+
 				return (<div>
 					{questionList}
 					<div className="pagination">
@@ -655,13 +681,6 @@ class Home extends Component {
 
 		return (
 			<div className="App">
-				{/*<button onClick={() => this.saving_data(this.state)}>Save data</button>*/}
-				{/*<button onClick={() => this.defaultAuth()}>defaultAuth</button>*/}
-				{/*<button onClick={() => app.auth().signOut()}>Sign out</button>*/}
-				{/*<button onClick={() => console.log(this.state)}>show state</button>*/}
-				<div style={{textAlign: "center"}}>
-					<button className={"signinGoogle"} onClick={signInWithGoogle}>Войти через google</button>
-				</div>
 				{forms()}
 			</div>
 		);
