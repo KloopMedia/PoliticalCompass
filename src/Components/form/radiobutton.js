@@ -23,7 +23,7 @@ export default function RadioButton(props) {
 	}, {ans})
 
 	return (
-		<div>
+		<div id={index}>
 			<h4 className="question_title">{props.title}</h4>
 			<FormControl const='fieldset'>
 				<RadioGroup aria-label={props.title}  name={props.title} value={value} onChange={handleChange}>

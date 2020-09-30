@@ -78,7 +78,7 @@ class Home extends Component {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test.json')
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -432,7 +432,7 @@ class Home extends Component {
 			let message;
 			if (el.type === 'select') {
 				if (this.state.notAnswered.indexOf(i) != -1) {
-					message = 'Вам следуюет ответить на этот вопрос'
+					message = 'Вам следует ответить на этот вопрос'
 				} else {
 					message = ''
 				}
@@ -540,7 +540,6 @@ class Home extends Component {
 
 		let nextAndScrollTop = () => {
 			let whichNotAnswered = this.getNotAnswered(this.state, "plus");
-
 			if (whichNotAnswered.length == 0) {
 				this.getAxis(this.state)
 				this.setState({first_questions: this.state.first_questions + this.state.questions_on_page});
@@ -548,6 +547,11 @@ class Home extends Component {
 				topFunction();
 			} else {
 				this.setState({notAnswered: whichNotAnswered})
+				const el = document.getElementById(`${whichNotAnswered[0]}`)
+				el.scrollIntoView({
+					behavior: "smooth",
+					block: "start"
+				})
 			}
 
 			if (Object.values(this.state.answers).length == Object.values(this.state.questions).length && Object.values(this.state.answers).length != Object.values({}).length) {
@@ -602,7 +606,7 @@ class Home extends Component {
 
 		const forms = () => {
 			if (this.state.anket == false) {
-				let answers = (this.state.anket_all_answers == false) ? "Вам следуюет ответить на все вопросы" : ""
+				let answers = (this.state.anket_all_answers == false) ? "Вам следует ответить на все вопросы" : ""
 
 				return (
 					<div style={{textAlign: "center"}}>
@@ -625,7 +629,7 @@ class Home extends Component {
 					<div className="choose_axises">
 						{checkbox}
 					</div>
-					<div style={{textAlign:"center"}}>
+					<div style={{textAlign: "center"}}>
 						<button onClick={() => onlyTwoCheckbox()}>Показать результаты</button>
 					</div>
 					{chart()}
