@@ -314,6 +314,7 @@ button:hover {
     margin: 0;
 }
 
+
 .scatter-line > h5 {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
@@ -321,6 +322,15 @@ button:hover {
     padding: 0;
     margin: 0;
     padding-bottom: 15px;
+}
+
+.legend > h5 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    padding: 15px 0 0 0;
+    margin: 0;
+
 }
 
 /*position*/
@@ -341,7 +351,6 @@ button:hover {
     button {
         font-size: 11px;
         padding: 7px 25px;
-
     }
 
     /*style for question*/
@@ -386,6 +395,10 @@ button:hover {
     }
 
     .scatter-line > h5 {
+        font-size: 20px;
+    }
+
+    .legend > h5 {
         font-size: 20px;
     }
 
@@ -477,6 +490,9 @@ button:hover {
     .scatter-line > h5 {
         font-size: 18px;
     }
+    .legend > h5 {
+        font-size: 18px;
+    }
 
     .scatter-line > div > .decision > p {
         font-size: 15px;
@@ -532,6 +548,10 @@ button:hover {
     }
 
     .scatter-line > h5 {
+        font-size: 15px;
+    }
+
+    .legend > h5 {
         font-size: 15px;
     }
 }

@@ -373,7 +373,8 @@ class Home extends Component {
 			}
 
 			legendsByAxis[i] = itIs
-			return (<div>
+			return (<div className={"legend"}>
+				<h5>{this.state.axis_title[i]}</h5>
 				<p>{legends[itIs]}</p>
 			</div>)
 		})
@@ -410,7 +411,7 @@ class Home extends Component {
 			firebase.auth().onAuthStateChanged(function (user) {
 				if (user != null) {
 					uid = user.uid
-					db.doc(uid).collection('answers').doc().set(part).then(console.log('сохранилось'))
+					db.doc(uid).collection('answers').doc().set(part)
 
 				} else if (user == null) {
 					signInAnonymously()
@@ -450,18 +451,16 @@ class Home extends Component {
 		})
 
 		let axisAverrage = this.state.axis_title.map((el, i) => {
-			if (el != "Внутренняя политикаaa") {
-				return (<ScatterLine index={i}
-				                     axisName={el}
-				                     names={this.state.compass_compare.position}
-				                     partyAxises={this.state.compass_compare.axises}
-				                     partyColor={this.state.partyColor}
-				                     axisAverrage={this.state.all_axis_averrage[i]}
-						// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
-						                 axisPoints={this.state.axis_points[i]}
-					/>
-				)
-			}
+			return (<ScatterLine index={i}
+			                     axisName={el}
+			                     names={this.state.compass_compare.position}
+			                     partyAxises={this.state.compass_compare.axises}
+			                     partyColor={this.state.partyColor}
+			                     axisAverrage={this.state.all_axis_averrage[i]}
+					// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+					                 axisPoints={this.state.axis_points[i]}
+				/>
+			)
 		})
 
 		let checkbox = this.state.axis.map((el, i) => {
