@@ -450,7 +450,7 @@ class Home extends Component {
 		})
 
 		let axisAverrage = this.state.axis_title.map((el, i) => {
-			if (el != "Внутренняя политика") {
+			if (el != "Внутренняя политикаaa") {
 				return (<ScatterLine index={i}
 				                     axisName={el}
 				                     names={this.state.compass_compare.position}
