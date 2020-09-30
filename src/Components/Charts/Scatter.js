@@ -19,6 +19,7 @@ export default function Scatter(props) {
 			symbolSize: 12,
 			data: [el],
 			type: 'scatter',
+			symbol: 'circle',
 			color: color[i],
 			emphasis: {
 				label: {

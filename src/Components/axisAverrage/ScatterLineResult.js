@@ -24,6 +24,7 @@ export default function ScatterLine(props) {
 			symbolSize: 12,
 			data: [[el[props.index], 0]],
 			type: 'scatter',
+			symbol: "circle",
 			color: partyColor[i],
 			emphasis: {
 				label: {
