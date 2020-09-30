@@ -48,6 +48,50 @@
     display: grid;
 }
 
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    padding-top: 25px;
+}
+
+.pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-content: space-around;
+    align-items: center;
+    justify-items: center;
+    grid-column-gap: 20px;
+}
+
+.signinGoogle{
+        background-color: #d03d2f;
+
+}
+
+button {
+    color: white;
+    background-color: #000;
+    border-style: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 25px 0;
+    height: 50%;
+    transform: none;
+    padding: 7px 40px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s ease 0s;
+    place-self: center;
+    outline: none;
+}
+
+button:hover {
+    background-color: #303030;
+}
+
 .questions > div {
     grid-column-start: 2;
     grid-column-end: five;
@@ -109,7 +153,6 @@
     grid-template-columns: repeat(2, 1fr);
     column-gap: 20px;
     row-gap: 15px;
-    align-items: center;
 }
 
 .myLegends > div > p {
@@ -274,10 +317,10 @@
 .scatter-line > h5 {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
-
     font-size: 19px;
     padding: 0;
     margin: 0;
+    padding-bottom: 15px;
 }
 
 /*position*/
@@ -295,53 +338,59 @@
 }
 
 @media only screen and (max-width: 770px) {
+    button {
+        font-size: 11px;
+        padding: 7px 25px;
+
+    }
+
     /*style for question*/
     .question_title {
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .question_item > span {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     /*style for question END*/
     /*choosing 2 axises START*/
     .myLegends > div > p {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .resultParty > h3:nth-child(1) {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .resultParty > h3:nth-child(2) {
         padding-bottom: 10px;
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .choose_axises > div > label > span:nth-child(2) {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .choose3axis {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .full-result {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .scatter-line > h5 {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .scatter-line > div > .decision > p {
-        font-size: 13px;
+        font-size: 15px;
         margin: 0;
         padding: 15px 0 0 0;
     }
@@ -351,7 +400,7 @@
     }
 
     .moreResult {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .facebookBtn {
@@ -366,7 +415,7 @@
     }
 
     .fb > div > p {
-        font-size: 13px;
+        font-size: 15px;
 
     }
 
@@ -374,30 +423,34 @@
 }
 
 @media only screen and (max-width: 470px) {
+    button {
+        font-size: 10px;
+
+    }
+
     /*style for question*/
     .question_title {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .question_item > span {
-        font-size: 11px;
+        font-size: 15px;
     }
 
     /*style for question END*/
     /*choosing 2 axises START*/
-
     .myLegends > div > p {
-        font-size: 11px;
+        font-size: 15px;
 
     }
 
     .resultParty > h3:nth-child(1) {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .resultParty > h3:nth-child(2) {
         padding-bottom: 10px;
-        font-size: 17px;
+        font-size: 19px;
     }
 
     .choose_axises > div > label > span:nth-child(1) > span:nth-child(1) > svg {
@@ -405,28 +458,28 @@
     }
 
     .choose_axises > div > label > span:nth-child(2) {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .choose3axis {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .full-result {
-        font-size: 15px;
+        font-size: 17px;
     }
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .scatter-line > h5 {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .scatter-line > div > .decision > p {
-        font-size: 11px;
+        font-size: 15px;
         margin: 0;
         padding: 10px 0 0 0;
     }
@@ -436,7 +489,7 @@
     }
 
     .moreResult {
-        font-size: 17px;
+        font-size: 19px;
     }
 
     .facebookBtn {
@@ -449,13 +502,18 @@
     }
 
     .fb > div > p {
-        font-size: 10px;
+        font-size: 12px;
 
     }
 
 }
 
 @media only screen and (max-width: 330px) {
+    button {
+        font-size: 10px;
+        padding: 7px 20px;
+    }
+
     .choose_axises {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -465,15 +523,15 @@
     }
 
     .full-result {
-        font-size: 13px;
+        font-size: 15px;
     }
 
     /*choosing 2 axises END*/
     .scatter-line > h4 {
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .scatter-line > h5 {
-        font-size: 13px;
+        font-size: 15px;
     }
 }

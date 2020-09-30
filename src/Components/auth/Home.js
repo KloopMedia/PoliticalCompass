@@ -388,7 +388,7 @@ class Home extends Component {
 	saving_data = (state) => {
 		const answ = state.answer_values_males[0][state.anket_answers[0]]
 
-		let answers = Object.values(state.answers).map((el,i)=>{
+		let answers = Object.values(state.answers).map((el, i) => {
 			let answerIdx = answ.indexOf(el)
 			return {[i]: answerIdx}
 		})
@@ -457,7 +457,7 @@ class Home extends Component {
 				                     partyAxises={this.state.compass_compare.axises}
 				                     partyColor={this.state.partyColor}
 				                     axisAverrage={this.state.all_axis_averrage[i]}
-														// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
+						// axisAverrage={/*this.state.all_axis_averrage[i]*/i}
 						                 axisPoints={this.state.axis_points[i]}
 					/>
 				)
@@ -552,9 +552,9 @@ class Home extends Component {
 
 			if (Object.values(this.state.answers).length == Object.values(this.state.questions).length && Object.values(this.state.answers).length != Object.values({}).length) {
 
-			this.saving_data(this.state)
+				this.saving_data(this.state)
 
-		}
+			}
 
 		}
 
@@ -605,10 +605,12 @@ class Home extends Component {
 				let answers = (this.state.anket_all_answers == false) ? "Вам следуюет ответить на все вопросы" : ""
 
 				return (
-					<div>
+					<div style={{textAlign: "center"}}>
 						<p className={"chooseAnswer padding_margin"}>{answers}</p>
 						{anket}
-						<button onClick={() => doneAnket()}>Начать!</button>
+						<div className={"buttons"}>
+							<button onClick={() => doneAnket()}>Начать</button>
+						</div>
 					</div>
 				)
 			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
@@ -623,7 +625,9 @@ class Home extends Component {
 					<div className="choose_axises">
 						{checkbox}
 					</div>
-					<button onClick={() => onlyTwoCheckbox()}>Показать результаты</button>
+					<div style={{textAlign:"center"}}>
+						<button onClick={() => onlyTwoCheckbox()}>Показать результаты</button>
+					</div>
 					{chart()}
 					<div className={'result-position'}>
 						<h3>Самая близкая для вас партия:</h3>
@@ -637,8 +641,10 @@ class Home extends Component {
 			} else {
 				return (<div>
 					{questionList}
-					<button onClick={previousAndScrollTop}>Previous page</button>
-					<button onClick={nextAndScrollTop}>Next page</button>
+					<div className="pagination">
+						<button onClick={previousAndScrollTop}>Предыдущая страница</button>
+						<button onClick={nextAndScrollTop}>Следующая страница</button>
+					</div>
 				</div>) // in else
 
 			}
@@ -646,11 +652,13 @@ class Home extends Component {
 
 		return (
 			<div className="App">
-				<button onClick={() => this.saving_data(this.state)}>Save data</button>
-				<button onClick={() => this.defaultAuth()}>defaultAuth</button>
-				<button onClick={() => app.auth().signOut()}>Sign out</button>
-				<button onClick={() => console.log(this.state)}>show state</button>
-				<button onClick={signInWithGoogle}>Sign in with google</button>
+				{/*<button onClick={() => this.saving_data(this.state)}>Save data</button>*/}
+				{/*<button onClick={() => this.defaultAuth()}>defaultAuth</button>*/}
+				{/*<button onClick={() => app.auth().signOut()}>Sign out</button>*/}
+				{/*<button onClick={() => console.log(this.state)}>show state</button>*/}
+				<div style={{textAlign: "center"}}>
+					<button className={"signinGoogle"} onClick={signInWithGoogle}>Войти через google</button>
+				</div>
 				{forms()}
 			</div>
 		);

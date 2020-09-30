@@ -49,10 +49,10 @@ export default function ScatterLine(props) {
 	})
 
 	axises.push({
-		symbolSize: 7,
+		symbolSize: 13,
 		data: [[props.axisAverrage, 0]],
 		type: 'scatter',
-		color: 'black',
+		color: 'red',
 		emphasis: {
 			label: {
 				show: true,
@@ -84,7 +84,7 @@ export default function ScatterLine(props) {
 
 	return (
 		<div className='scatter-line'>
-			<h5>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
+			<h5 style={{textAlign:"center"}}>{props.axisName}: {parseFloat(props.axisAverrage).toFixed(2)}</h5>
 			<div>
 				<div className={"decision"}>
 					<p className={"minus"}>
