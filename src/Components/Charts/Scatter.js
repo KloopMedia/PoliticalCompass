@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Scatter(props) {
 	const classes = useStyles();
 	const color = props.partyColor
-
 	let axises = props.axises.map((el, i) => {
 		let partyAxis = {
 			name: props.names[i],
@@ -38,7 +37,7 @@ export default function Scatter(props) {
 		data: [props.myAxis],
 		type: 'scatter',
 		symbol: "diamond",
-
+		name: "Я",
 		color: 'red',
 		label: {
 			show: true,
@@ -46,15 +45,9 @@ export default function Scatter(props) {
 			formatter: "Я",
 			fontWeight: "bold"
 
-		},
-		emphasis: {
-			label: {
-				show: true,
-				formatter: "Я",
-				position: 'top'
-			}
 		}
 	})
+
 	const getOption = () => ({
 		color: color,
 		legend: {

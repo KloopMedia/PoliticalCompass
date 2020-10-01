@@ -14,8 +14,6 @@ import {
 } from "react-share";
 import ScatterLine from "../axisAverrage/ScatterLineResult";
 import PartyImage from "../component/PartyImage";
-import ReactGA from 'react-ga';
-import {onLog} from "firebase";
 import PrecentOfAnswered from "../axisAverrage/PrecentOfAnswered";
 
 let distance = require('euclidean-distance')
@@ -78,8 +76,8 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -426,7 +424,6 @@ class Home extends Component {
 	}
 
 	signInWithGoogleUser = () => {
-		console.log('вхожу через гугл')
 		firebase.auth().onAuthStateChanged(function (user) {
 			signInWithGoogle()
 
@@ -437,7 +434,6 @@ class Home extends Component {
 	}
 
 	render() {
-
 
 		let qSet = this.state.questions.slice(this.state.first_questions, this.state.first_questions + this.state.questions_on_page)
 		let questionList = qSet.map((el, i) => {
@@ -553,7 +549,6 @@ class Home extends Component {
 
 		let nextAndScrollTop = () => {
 			let whichNotAnswered = this.getNotAnswered(this.state, "plus");
-			console.log(whichNotAnswered)
 			if (whichNotAnswered.length == 0) {
 				this.getAxis(this.state)
 				this.setState({first_questions: this.state.first_questions + this.state.questions_on_page});
@@ -664,9 +659,7 @@ let result = this.state.onlyTwoCheckBox ? "" : "Выберите только д
 						<h3>Ближайшая вам партия по выбранным осям:</h3>
 						<h2>{this.state.position.title}</h2>
 					</div>
-
-
-				</div>) //in if
+				</div>)
 
 			} else {
 
@@ -677,14 +670,13 @@ let result = this.state.onlyTwoCheckBox ? "" : "Выберите только д
 						<button onClick={previousAndScrollTop}>Предыдущая страница</button>
 						<button onClick={nextAndScrollTop}>Следующая страница</button>
 					</div>
-				</div>) // in else
+				</div>)
 
 			}
 		}
 
 		return (
 			<div className="App">
-				<button onClick={() => console.log(this.state)}>show state</button>
 				{forms()}
 			</div>
 		);
