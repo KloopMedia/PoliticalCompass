@@ -71,8 +71,8 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+				// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -529,7 +529,8 @@ class Home extends Component {
 
 				<div className={"partyImage"}>
 					<PartyImage partyLink={minIs.idx} partyName={this.state.compass_compare.parties_image_name[minIs.idx]}/>
-					<a href={this.state.compass_compare.about_parties[minIs.idx]}>Узнайте больше об этой партии</a>
+					<a target="_blank" href={this.state.compass_compare.about_parties[minIs.idx]}>Узнайте больше об этой
+						партии</a>
 
 				</div>
 				<div className={"resultParty"}>
@@ -612,6 +613,7 @@ class Home extends Component {
 
 		let doneAnket = () => {
 			if (Object.keys(this.state.anket_answers).length == this.state.anketa_questions.length) {
+				topFunction();
 				this.setState({
 					anket_all_answers: true,
 					anket: true

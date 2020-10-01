@@ -9,7 +9,7 @@ export default function PrecentOfAnswered(props){
 	const precentOfAnswered = (current*100)/lengthQuestion
 	return(
 		<div style={{textAlign:"center"}}>
-			<h4 className="question_title">
+			<h4 id="precentOfAnswered" className="question_title">
 				Вы заполнили компас на {Math.ceil(precentOfAnswered)}%
 			</h4>
 		</div>
