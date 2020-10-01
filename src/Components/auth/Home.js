@@ -547,6 +547,7 @@ class Home extends Component {
 						legends={this.state.axis_legends}
 						indexLegends={this.state.legendary}
 						compass_url={this.state.compass_url}
+						nearestParty={this.state.nearestParty.name}
 					/>
 				</div>
 			</div>)
@@ -681,7 +682,6 @@ class Home extends Component {
 						<button onClick={nextAndScrollTop}>Следующая страница</button>
 					</div>
 				</div>)
-
 			}
 		}
 

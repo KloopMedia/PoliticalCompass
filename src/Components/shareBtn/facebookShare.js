@@ -19,7 +19,7 @@ export default function FacebookShareBtn(props) {
 			<FacebookShareButton
 						className={'fb'}
 						url={props.compass_url}
-						quote={message.join(' ')+"\n\n"+`Узнай, какие кыргызские партии солидарны с моей и с твоей позицией:${props.compass_url}`}
+						quote={message.join(' ')+"\n\n"+`Ближайшая мне партия — ${props.nearestParty}. А у тебя? Пройди тест и узнай:${props.compass_url}`}
 					>
 						<div>
 							<FacebookIcon
