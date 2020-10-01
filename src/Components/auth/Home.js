@@ -7,11 +7,6 @@ import Scatter from "../Charts/Scatter";
 import firebase from "../../util/firebase";
 import FacebookShareBtn from "../shareBtn/facebookShare";
 import app, {signInWithGoogle, signInAnonymously} from "../../util/firebase";
-import {
-	EmailShareButton, FacebookIcon,
-	FacebookShareButton,
-	FacebookShareCount
-} from "react-share";
 import ScatterLine from "../axisAverrage/ScatterLineResult";
 import PartyImage from "../component/PartyImage";
 import PrecentOfAnswered from "../axisAverrage/PrecentOfAnswered";
@@ -76,8 +71,8 @@ class Home extends Component {
 		let urlString = queryString.parse(window.location.search, {decode: false})
 		console.log(urlString)
 		if (true) {
-			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
+				// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -459,16 +454,18 @@ class Home extends Component {
 		})
 
 		let axisAverrage = this.state.axis_title.map((el, i) => {
-			return (<ScatterLine index={i}
-			                     axisName={el}
-			                     names={this.state.compass_compare.position}
-			                     partyAxises={this.state.compass_compare.axises}
-			                     partyColor={this.state.partyColor}
-			                     axisNearest={this.state.axisNearest[i]}
-			                     axisAverrage={this.state.all_axis_averrage[i]}
-					                 axisPoints={this.state.axis_points[i]}
-				/>
-			)
+			if (el != "Внутренняя политика") {
+				return (<ScatterLine index={i}
+				                     axisName={el}
+				                     names={this.state.compass_compare.position}
+				                     partyAxises={this.state.compass_compare.axises}
+				                     partyColor={this.state.partyColor}
+				                     axisNearest={this.state.axisNearest[i]}
+				                     axisAverrage={this.state.all_axis_averrage[i]}
+				                     axisPoints={this.state.axis_points[i]}
+					/>
+				)
+			}
 		})
 
 		let checkbox = this.state.axis.map((el, i) => {
@@ -482,12 +479,24 @@ class Home extends Component {
 
 		let chart = () => {
 			if (this.state.axises != {}) {
+				let axisesNames = this.state.axis_names
+
+				Object.keys(axisesNames).forEach(function (key) {
+					if (axisesNames[key] == false)
+						delete axisesNames[key];
+				});
+
 				return (
 					<div>
-						<Scatter partyColor={this.state.partyColor} myAxis={this.state.total_axis}
-						         names={this.state.compass_compare.position}
-						         axises={this.state.batch_axises}/>
+						<div>
+							<Scatter partyColor={this.state.partyColor} myAxis={this.state.total_axis}
+							         names={this.state.compass_compare.position}
+							         axises={this.state.batch_axises}/>
+						</div>
+						<p className={'scatter'}>Ось X — {this.state.axis_title[Object.keys(axisesNames)[0]]}</p>
+						<p className={'scatter'}>Ось Y — {this.state.axis_title[Object.keys(axisesNames)[1]]}</p>
 					</div>
+
 				)
 
 			}
@@ -638,7 +647,7 @@ class Home extends Component {
 					</div>
 				)
 			} else if (this.state.questions.length <= this.state.first_questions && this.state.anket == true) {
-let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
+				let result = this.state.onlyTwoCheckBox ? "" : "Выберите только две темы";
 				let d = (this.state.compass_compare.axises != undefined) ? resultParty() : "";
 				return (<div>
 					{d}

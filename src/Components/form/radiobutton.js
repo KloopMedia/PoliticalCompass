@@ -27,7 +27,7 @@ export default function RadioButton(props) {
 			<h4 className="question_title">{props.title}</h4>
 			<FormControl const='fieldset'>
 				<RadioGroup aria-label={props.title}  name={props.title} value={value} onChange={handleChange}>
-					{props.answers.map((el, i) => <FormControlLabel className="question_item" key={i} value={el} control={<Radio/>} label={el}/>)}
+					{props.answers.map((el, i) => <FormControlLabel className="question_item" key={i} value={el} control={<Radio/> } label={el}/>)}
 				</RadioGroup>
 				<div className="chooseAnswer padding_margin">
 					<p>{props.message}</p>

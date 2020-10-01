@@ -19,15 +19,11 @@ function App(){
 
 		return (
 			<div>
-				{/*<AuthProvider>*/}
 					<Router>
 						<div>
-							{/*<PrivateRoute exact path={"/questionnaire/"} component={Home}/>*/}
-							{/*<Route exact path={"/questionnaire/login"} component={Login}/>*/}
 							<Route exact path={"/PoliticalCompass/"} component={Home}/>
 						</div>
 					</Router>
-				{/*</AuthProvider>*/}
 			</div>
 		)
 
