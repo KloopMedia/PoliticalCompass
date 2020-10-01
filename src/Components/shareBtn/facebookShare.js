@@ -18,7 +18,7 @@ export default function FacebookShareBtn(props) {
 	return (
 			<FacebookShareButton
 						className={'fb'}
-						url={`https://kloop.kg/wp-content/uploads/2020/09/${props.name}.png`}
+						url={props.compass_url}
 						quote={message.join(' ')+"\n\n"+`Узнай, какие кыргызские партии солидарны с моей и с твоей позицией:${props.compass_url}`}
 					>
 						<div>
