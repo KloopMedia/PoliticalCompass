@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/PoliticalCompass/static/css/main.eefea701.chunk.css",
-    "main.js": "/PoliticalCompass/static/js/main.e94bbc49.chunk.js",
-    "main.js.map": "/PoliticalCompass/static/js/main.e94bbc49.chunk.js.map",
+    "main.css": "/PoliticalCompass/static/css/main.e3d2c462.chunk.css",
+    "main.js": "/PoliticalCompass/static/js/main.f238c068.chunk.js",
+    "main.js.map": "/PoliticalCompass/static/js/main.f238c068.chunk.js.map",
     "runtime-main.js": "/PoliticalCompass/static/js/runtime-main.9b5d5903.js",
     "runtime-main.js.map": "/PoliticalCompass/static/js/runtime-main.9b5d5903.js.map",
-    "static/js/2.7263b0bd.chunk.js": "/PoliticalCompass/static/js/2.7263b0bd.chunk.js",
-    "static/js/2.7263b0bd.chunk.js.map": "/PoliticalCompass/static/js/2.7263b0bd.chunk.js.map",
+    "static/js/2.38897ba2.chunk.js": "/PoliticalCompass/static/js/2.38897ba2.chunk.js",
+    "static/js/2.38897ba2.chunk.js.map": "/PoliticalCompass/static/js/2.38897ba2.chunk.js.map",
     "index.html": "/PoliticalCompass/index.html",
-    "precache-manifest.e763e98d2c05e5763e3c7a95905025a5.js": "/PoliticalCompass/precache-manifest.e763e98d2c05e5763e3c7a95905025a5.js",
+    "precache-manifest.728e2dc2deb9872a7ed88f4e8d990557.js": "/PoliticalCompass/precache-manifest.728e2dc2deb9872a7ed88f4e8d990557.js",
     "service-worker.js": "/PoliticalCompass/service-worker.js",
-    "static/css/main.eefea701.chunk.css.map": "/PoliticalCompass/static/css/main.eefea701.chunk.css.map",
-    "static/js/2.7263b0bd.chunk.js.LICENSE.txt": "/PoliticalCompass/static/js/2.7263b0bd.chunk.js.LICENSE.txt"
+    "static/css/main.e3d2c462.chunk.css.map": "/PoliticalCompass/static/css/main.e3d2c462.chunk.css.map",
+    "static/js/2.38897ba2.chunk.js.LICENSE.txt": "/PoliticalCompass/static/js/2.38897ba2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9b5d5903.js",
-    "static/js/2.7263b0bd.chunk.js",
-    "static/css/main.eefea701.chunk.css",
-    "static/js/main.e94bbc49.chunk.js"
+    "static/js/2.38897ba2.chunk.js",
+    "static/css/main.e3d2c462.chunk.css",
+    "static/js/main.f238c068.chunk.js"
   ]
 }
