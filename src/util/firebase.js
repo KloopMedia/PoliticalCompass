@@ -1,14 +1,14 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCxXwvIJFV9BDZFyQZyBs7k9M0GiI1MRuU",
-	authDomain: "testing-a6f79.firebaseapp.com",
-	databaseURL: "https://testing-a6f79.firebaseio.com",
-	projectId: "testing-a6f79",
-	storageBucket: "testing-a6f79.appspot.com",
-	messagingSenderId: "886214831731",
-	appId: "1:886214831731:web:9d4fee09d2061fead04406",
-	measurementId: "G-DH4LKFT44D"
+		apiKey: "AIzaSyAsHkL31D3SoLKJB7KckZJhP-5OeAKEr24",
+    authDomain: "politicalcompass-ab7db.firebaseapp.com",
+    databaseURL: "https://politicalcompass-ab7db.firebaseio.com",
+    projectId: "politicalcompass-ab7db",
+    storageBucket: "politicalcompass-ab7db.appspot.com",
+    messagingSenderId: "784296265940",
+    appId: "1:784296265940:web:37d3c65879cb09cebe5341",
+    measurementId: "G-47ZKW7PQ4L"
 }
 firebase.initializeApp(firebaseConfig);
 
