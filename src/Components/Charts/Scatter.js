@@ -2,6 +2,7 @@ import React from 'react';
 import ReactEcharts from "echarts-for-react";
 import {makeStyles} from '@material-ui/core/styles';
 import 'echarts-gl';
+import "../../App.css"
 
 const useStyles = makeStyles((theme) => ({
 	formControl: {
@@ -86,7 +87,9 @@ export default function Scatter(props) {
 	})
 	return (
 		<div className={classes.formControl}>
-			<ReactEcharts style={{height: "500px"}} option={getOption()}/>
+					<ReactEcharts style={{height: "500px"}} option={getOption()}/>
+
+
 		</div>
 	);
 }
