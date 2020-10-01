@@ -24,7 +24,7 @@ function App(){
 						<div>
 							{/*<PrivateRoute exact path={"/questionnaire/"} component={Home}/>*/}
 							{/*<Route exact path={"/questionnaire/login"} component={Login}/>*/}
-							<Route exact path={"/questionnaire/"} component={Home}/>
+							<Route exact path={"/PoliticalCompass/"} component={Home}/>
 						</div>
 					</Router>
 				{/*</AuthProvider>*/}
