@@ -624,17 +624,16 @@ class Home extends Component {
 						<p>Если хотите в будущем найти единомышленников среди других пользователей, нажмите сюда и у нас сохранятся
 							ваше имя и email:</p>
 						<button className={"signinGoogle"} onClick={() => this.signInWithGoogleUser()}>Войти через google</button>
-						<p>Можно и не входить в Google тогда просто сразу жмите сюда:</p>
 					</div>)
 				return (
 					<div style={{textAlign: "center"}}>
 						<p className={"chooseAnswer padding_margin"}>{answers}</p>
 						{anket}
-						<div className={"enter"}>
-							{userIs}
-						</div>
 						<div className={"buttons"}>
 							<button onClick={() => doneAnket()}>Начать</button>
+						</div>
+						<div className={"enter"}>
+							{userIs}
 						</div>
 					</div>
 				)
