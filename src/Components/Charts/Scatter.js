@@ -88,8 +88,6 @@ export default function Scatter(props) {
 	return (
 		<div className={classes.formControl}>
 					<ReactEcharts style={{height: "500px"}} option={getOption()}/>
-
-
 		</div>
 	);
 }
