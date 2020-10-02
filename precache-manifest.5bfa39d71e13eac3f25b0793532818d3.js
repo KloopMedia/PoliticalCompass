@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7d5b2e6f1e4690862d4b3545178411f3",
+    "revision": "2a4b2bb63adc399f0e470b2c63e670b2",
     "url": "/PoliticalCompass/index.html"
   },
   {
-    "revision": "aec16adc87ebf8980eb7",
+    "revision": "e35b30285f478817d83e",
     "url": "/PoliticalCompass/static/css/main.73971c78.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/PoliticalCompass/static/js/2.4359af8c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aec16adc87ebf8980eb7",
-    "url": "/PoliticalCompass/static/js/main.f7089118.chunk.js"
+    "revision": "e35b30285f478817d83e",
+    "url": "/PoliticalCompass/static/js/main.9c7b1eb0.chunk.js"
   },
   {
     "revision": "6c301e307cbf8e0ac3e4",

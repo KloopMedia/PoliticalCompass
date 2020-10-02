@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/PoliticalCompass/static/css/main.73971c78.chunk.css",
-    "main.js": "/PoliticalCompass/static/js/main.f7089118.chunk.js",
-    "main.js.map": "/PoliticalCompass/static/js/main.f7089118.chunk.js.map",
+    "main.js": "/PoliticalCompass/static/js/main.9c7b1eb0.chunk.js",
+    "main.js.map": "/PoliticalCompass/static/js/main.9c7b1eb0.chunk.js.map",
     "runtime-main.js": "/PoliticalCompass/static/js/runtime-main.9b5d5903.js",
     "runtime-main.js.map": "/PoliticalCompass/static/js/runtime-main.9b5d5903.js.map",
     "static/js/2.4359af8c.chunk.js": "/PoliticalCompass/static/js/2.4359af8c.chunk.js",
     "static/js/2.4359af8c.chunk.js.map": "/PoliticalCompass/static/js/2.4359af8c.chunk.js.map",
     "index.html": "/PoliticalCompass/index.html",
-    "precache-manifest.b28034a76aacfed1c2243e74b0f0a80e.js": "/PoliticalCompass/precache-manifest.b28034a76aacfed1c2243e74b0f0a80e.js",
+    "precache-manifest.5bfa39d71e13eac3f25b0793532818d3.js": "/PoliticalCompass/precache-manifest.5bfa39d71e13eac3f25b0793532818d3.js",
     "service-worker.js": "/PoliticalCompass/service-worker.js",
     "static/css/main.73971c78.chunk.css.map": "/PoliticalCompass/static/css/main.73971c78.chunk.css.map",
     "static/js/2.4359af8c.chunk.js.LICENSE.txt": "/PoliticalCompass/static/js/2.4359af8c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.9b5d5903.js",
     "static/js/2.4359af8c.chunk.js",
     "static/css/main.73971c78.chunk.css",
-    "static/js/main.f7089118.chunk.js"
+    "static/js/main.9c7b1eb0.chunk.js"
   ]
 }
