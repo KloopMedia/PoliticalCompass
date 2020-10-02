@@ -210,11 +210,19 @@ button:hover {
     font-size: 17px;
 }
 
-.facebookBtn {
+.facebookBtn > .buttonsShare {
     display: grid;
-    justify-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    justify-content: center;
     padding-bottom: 15px;
 
+}
+
+.facebookBtn > h4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
 }
 
 .fb > div {
@@ -353,12 +361,14 @@ button:hover {
 .arrows {
     display: flex;
     justify-content: space-between;
-        padding-top: 5px;
+    padding-top: 5px;
 
 }
-.partyImage{
+
+.partyImage {
     text-align: center;
 }
+
 .partyImage > a {
     color: black;
     font-family: 'Roboto', sans-serif;
@@ -384,7 +394,7 @@ button:hover {
     margin: 0;
 }
 
-.scatter-line > .nameAxis{
+.scatter-line > .nameAxis {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -405,7 +415,6 @@ button:hover {
     place-self: center;
     outline: none;
     margin: 15px 0 35px 0;
-
 
 
 }
@@ -433,7 +442,7 @@ button:hover {
 
 }
 
-.scatter{
+.scatter {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 17px;
@@ -441,8 +450,8 @@ button:hover {
 
 @media only screen and (max-width: 770px) {
     .myLegends {
-    column-gap: 30px;
-}
+        column-gap: 30px;
+    }
 
     .notEnterByEmail > p {
         font-size: 14px;
@@ -522,16 +531,10 @@ button:hover {
 
     }
 
-    .fb > div {
-        display: grid;
-        grid-template-columns: 2fr 9fr 1fr;
-        align-items: center;
+    .facebookBtn > h4 {
+        font-size: 17px;
     }
 
-    .fb > div > p {
-        font-size: 15px;
-
-    }
 
     .scatter {
         font-size: 15px;
@@ -620,7 +623,8 @@ button:hover {
         font-size: 19px;
     }
 
-    .facebookBtn {
+    .facebookBtn > h4 {
+        font-size: 16px;
     }
 
     .fb > div {
@@ -670,6 +674,10 @@ button:hover {
     }
 
     .scatter-line > .nameAxis > h5 {
+        font-size: 15px;
+    }
+
+    .facebookBtn > h4 {
         font-size: 15px;
     }
 

@@ -541,6 +541,7 @@ class Home extends Component {
 				</div>
 
 				<div className={"facebookBtn"}>
+					<h4 style={{textAlign: "center"}}>Поделиться результатами в социальных сетях</h4>
 					<FacebookShareBtn
 						className={'fb'}
 						name={this.state.compass_compare.parties_image_name[minIs.idx]}
