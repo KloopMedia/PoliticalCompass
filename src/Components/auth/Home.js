@@ -72,7 +72,7 @@ class Home extends Component {
 		console.log(urlString)
 		if (true) {
 			// fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/final_config_test_0.json')
-				fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
+			fetch('https://raw.githubusercontent.com/Kabirov7/kloop-forms-test/master/config_plus_test_and_anketa.json')
 				// if (urlString.url) {
 				// 	fetch(urlString.url)
 				.then((response) => {
@@ -674,12 +674,16 @@ class Home extends Component {
 				</div>)
 
 			} else {
+				let previousPageShowing = (this.state.first_questions == 0) ?
+					<button style={{display:"none"}}>Предыдущая страница</button> :
+					<button onClick={previousAndScrollTop}>Предыдущая страница</button>
+
 
 				return (<div>
 					<PrecentOfAnswered lenQuestions={this.state.questions.length} currentQuestions={this.state.first_questions}/>
 					{questionList}
 					<div className="pagination">
-						<button onClick={previousAndScrollTop}>Предыдущая страница</button>
+						{previousPageShowing}
 						<button onClick={nextAndScrollTop}>Следующая страница</button>
 					</div>
 				</div>)
